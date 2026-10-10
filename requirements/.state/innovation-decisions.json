@@ -1,0 +1,11 @@
+{
+  "schema_version": 1,
+  "_rules": [
+    "One entry per INN-### ID. Agents may add entries (decision: PENDING) and may fill promoted_to after a promote run.",
+    "Agents never overwrite an entry whose decision is not PENDING.",
+    "Humans set decision to ACCEPT | REJECT | DEFER here or in the decision block of requirements/innovation-opportunities.md. On conflict this file wins and the agent reports the conflict.",
+    "Only ACCEPT items are promoted, and only by the promote run mode."
+  ],
+  "last_updated": null,
+  "decisions": {}
+}

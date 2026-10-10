@@ -1,0 +1,4 @@
+node_modules/
+.DS_Store
+# in-run scratch written by the Business Requirements agent between checkpoints
+requirements/.state/draft.json

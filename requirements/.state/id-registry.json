@@ -1,0 +1,19 @@
+{
+  "schema_version": 1,
+  "_rules": [
+    "Counters only increase. An ID is never reused or reassigned, including IDs of DEPRECATED items.",
+    "ids[] is append-only. Set retired: true instead of removing an entry.",
+    "fingerprint = sha1 of lowercased `type|sorted source US-IDs|normalised title`; used by update mode to match existing items before minting a new ID.",
+    "US-### IDs are owned by the User Story Agent and are recorded here only for traceability."
+  ],
+  "created": "2026-09-20",
+  "last_updated": null,
+  "last_run": null,
+  "counters": {
+    "FR": 0, "NFR": 0, "BR": 0, "DR": 0, "IR": 0, "SR": 0, "CR": 0,
+    "CON": 0, "ASM": 0, "DEP": 0,
+    "RISK": 0, "Q": 0, "INN": 0, "TRD": 0
+  },
+  "ids": {},
+  "stories_seen": {}
+}
