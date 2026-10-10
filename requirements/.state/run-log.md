@@ -1,4 +1,4 @@
-# Business Requirements Agent — run log
+# Requirements / PM Agent — run log
 
 One checkpoint line per step. Format:
 

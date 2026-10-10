@@ -1,6 +1,6 @@
 ---
 name: requirements-prioritization
-description: Steps 12–13 of the Business Requirements workflow. Consolidates and de-duplicates clarification questions (Q-###) with the requirements each blocks, a suggested default option and audience CLIENT/INTERNAL; then prioritises every requirement with MoSCoW and assigns phases MVP/PHASE_2/PHASE_3/FUTURE, all marked PROPOSED. Use when asked to 'prioritise requirements', 'MoSCoW', 'assign phases', 'consolidate questions', or after trend analysis in an analyze/update run.
+description: Steps 12–13 of the Requirements / PM workflow. Consolidates and de-duplicates clarification questions (Q-###) with the requirements each blocks, a suggested default option and audience CLIENT/INTERNAL; then prioritises every requirement with MoSCoW and assigns phases MVP/PHASE_2/PHASE_3/FUTURE, all marked PROPOSED. Use when asked to 'prioritise requirements', 'MoSCoW', 'assign phases', 'consolidate questions', or after trend analysis in an analyze/update run.
 argument-hint: "[optional: questions|priorities to run one part]"
 ---
 
@@ -15,7 +15,7 @@ After trend analysis in an `analyze`/`update` run, or standalone when the user s
 ## Procedure
 
 *To be written in build phase 4.* Covers workflow step(s) 12–13 of the
-[Business Requirements agent](../../agents/business-requirements.agent.md).
+[Requirements / PM agent](../../agents/requirements.agent.md).
 
 ## Input / output contract
 

@@ -7,7 +7,7 @@ applyTo: "requirements/**"
 # Rules for files under `requirements/`
 
 These rules apply to any agent or human editing anything under `requirements/`. The
-[Business Requirements agent](../agents/business-requirements.agent.md) is the normal writer;
+[Requirements / PM agent](../agents/requirements.agent.md) is the normal writer;
 these rules also bind ad-hoc edits made in the default agent.
 
 ## 1. Source of truth
@@ -27,7 +27,7 @@ these rules also bind ad-hoc edits made in the default agent.
   `status: DEPRECATED` and stay in the JSON and the registry.
 - Prefixes: `FR` functional · `NFR` non-functional · `BR` business rule · `DR` data · `IR` integration ·
   `SR` security · `CR` compliance · `CON` constraint · `ASM` assumption · `DEP` dependency ·
-  `RISK` · `Q` question · `INN` innovation · `TRD` trend. Story IDs are `US-###` and come from the input, never invented.
+  `RISK` · `Q` question · `INN` innovation · `TRD` trend. Story IDs are `US-###`. They are minted only in the Requirements / PM agent's `stories` mode, from the `US` counter, or written by a human. Every other step takes them from the input and never invents one.
 - Format is `PREFIX-` + zero-padded three-digit number (`FR-007`); the fourth digit is added only when a counter passes 999.
 
 ## 3. Origin tags — nothing silently becomes a client requirement

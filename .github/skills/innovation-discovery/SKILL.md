@@ -1,6 +1,6 @@
 ---
 name: innovation-discovery
-description: Step 10 of the Business Requirements workflow. Scores a 150+ entry innovation catalogue (UX, AI, automation, analytics, personalization, collaboration, security, integrations, performance, mobile/offline, engagement, operations) against the product domain and goals using a weighted five-criteria rubric, and produces 30–40 INN-### candidates in four levels plus 3–5 generated bold bets, every one with a PENDING decision block. Never merges anything into requirements. Use when asked to 'find innovation opportunities', 'what could we add', 'feature ideas', or after risks in an analyze run.
+description: Step 10 of the Requirements / PM workflow. Scores a 150+ entry innovation catalogue (UX, AI, automation, analytics, personalization, collaboration, security, integrations, performance, mobile/offline, engagement, operations) against the product domain and goals using a weighted five-criteria rubric, and produces 30–40 INN-### candidates in four levels plus 3–5 generated bold bets, every one with a PENDING decision block. Never merges anything into requirements. Use when asked to 'find innovation opportunities', 'what could we add', 'feature ideas', or after risks in an analyze run.
 argument-hint: "[optional: category filter or minimum score]"
 # experimental — delete the next line to run this skill in the main session instead of a forked subagent
 context: fork
@@ -17,7 +17,7 @@ After risks in an `analyze` run, or standalone when the user says *innovation op
 ## Procedure
 
 *To be written in build phase 5.* Covers workflow step(s) 10 of the
-[Business Requirements agent](../../agents/business-requirements.agent.md).
+[Requirements / PM agent](../../agents/requirements.agent.md).
 
 ## Input / output contract
 

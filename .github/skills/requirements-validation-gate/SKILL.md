@@ -1,6 +1,6 @@
 ---
 name: requirements-validation-gate
-description: Step 14 of the Business Requirements workflow, also run mid-pipeline after step 5 and alone in validate mode. Checks requirements.json for completeness, consistency, ambiguity, traceability, testability, feasibility, duplication, scope contamination (INN/TRD content or unlabeled assumptions leaked into requirements) and JSON-schema validity, auto-fixes what it safely can, and writes requirements/validation-report.md. A failed pre-output gate blocks publishing. Use when asked to 'validate the requirements', 'run the gate', 'check for leaks', or before writing final output.
+description: Step 14 of the Requirements / PM workflow, also run mid-pipeline after step 5 and alone in validate mode. Checks requirements.json for completeness, consistency, ambiguity, traceability, testability, feasibility, duplication, scope contamination (INN/TRD content or unlabeled assumptions leaked into requirements) and JSON-schema validity, auto-fixes what it safely can, and writes requirements/validation-report.md. A failed pre-output gate blocks publishing. Use when asked to 'validate the requirements', 'run the gate', 'check for leaks', or before writing final output.
 argument-hint: "[mid|pre-output|standalone]"
 ---
 
@@ -15,7 +15,7 @@ Mid-pipeline after step 5, pre-output as step 14, or standalone via `validate` m
 ## Procedure
 
 *To be written in build phase 6.* Covers workflow step(s) 14 (and mid-pipeline after 5) of the
-[Business Requirements agent](../../agents/business-requirements.agent.md).
+[Requirements / PM agent](../../agents/requirements.agent.md).
 
 ## Input / output contract
 

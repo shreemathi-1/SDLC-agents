@@ -1,6 +1,6 @@
 ---
 name: scope-dependency-risk
-description: Steps 7–9 of the Business Requirements workflow. Sets scope IN/OUT/FUTURE with a reason per item, builds the requirement dependency graph (Mermaid) and flags cycles, and identifies business, technical, security, integration, scalability, compliance and requirement-quality risks each with likelihood, impact and mitigation. Use when asked to 'define scope', 'map dependencies', 'find cycles', 'identify risks', or after business rules in an analyze/update run.
+description: Steps 7–9 of the Requirements / PM workflow. Sets scope IN/OUT/FUTURE with a reason per item, builds the requirement dependency graph (Mermaid) and flags cycles, and identifies business, technical, security, integration, scalability, compliance and requirement-quality risks each with likelihood, impact and mitigation. Use when asked to 'define scope', 'map dependencies', 'find cycles', 'identify risks', or after business rules in an analyze/update run.
 argument-hint: "[optional: scope|dependencies|risks to run one part]"
 ---
 
@@ -15,7 +15,7 @@ After business rules in an `analyze`/`update` run, or standalone when the user s
 ## Procedure
 
 *To be written in build phase 3.* Covers workflow step(s) 7–9 of the
-[Business Requirements agent](../../agents/business-requirements.agent.md).
+[Requirements / PM agent](../../agents/requirements.agent.md).
 
 ## Input / output contract
 

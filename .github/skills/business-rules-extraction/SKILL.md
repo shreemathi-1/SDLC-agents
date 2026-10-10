@@ -1,6 +1,6 @@
 ---
 name: business-rules-extraction
-description: Step 6 of the Business Requirements workflow. Extracts business rules as BR-### items kept separate from features, categorised as validation, eligibility, authorization, calculation, workflow, time-based, state-transition or data-constraint, each traced to its story evidence and linked from the requirements it governs. Use when asked to 'extract business rules', 'what rules govern this', 'list validation rules', or after gap analysis in an analyze/update run.
+description: Step 6 of the Requirements / PM workflow. Extracts business rules as BR-### items kept separate from features, categorised as validation, eligibility, authorization, calculation, workflow, time-based, state-transition or data-constraint, each traced to its story evidence and linked from the requirements it governs. Use when asked to 'extract business rules', 'what rules govern this', 'list validation rules', or after gap analysis in an analyze/update run.
 argument-hint: "[optional: rule category filter]"
 ---
 
@@ -15,7 +15,7 @@ After the mid-pipeline gate in an `analyze`/`update` run, or standalone when the
 ## Procedure
 
 *To be written in build phase 3.* Covers workflow step(s) 6 of the
-[Business Requirements agent](../../agents/business-requirements.agent.md).
+[Requirements / PM agent](../../agents/requirements.agent.md).
 
 ## Input / output contract
 

@@ -1,7 +1,7 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "$id": "https://sdlc-pipeline.local/schemas/requirements.schema.json",
-  "title": "requirements.json — Business Requirements Agent source of truth",
+  "title": "requirements.json — Requirements / PM Agent source of truth",
   "description": "Schema for requirements/requirements.json. The document is the single source of truth; every Markdown file under requirements/ is generated from it. The validation gate (step 14) checks the document against this schema.",
   "type": "object",
   "additionalProperties": false,

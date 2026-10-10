@@ -1,6 +1,6 @@
 ---
 name: requirements-ambiguity-gap
-description: Steps 4–5 of the Business Requirements workflow. Detects ambiguous or unmeasurable requirements (what is ambiguous, why it matters, possible interpretations, a clarification question, impact if unresolved) and runs a domain-filtered gap analysis across auth, roles, workflows, validation, error handling, notifications, payments, integrations, security, performance, accessibility, compliance, analytics, admin, backup/recovery, monitoring, localization, audit logging and data retention, bucketed CRITICAL/IMPORTANT/OPTIONAL, then triggers the mid-pipeline validation gate. Use when asked to 'find ambiguities', 'run gap analysis', 'what is missing from the requirements', or after extraction in an analyze/update run.
+description: Steps 4–5 of the Requirements / PM workflow. Detects ambiguous or unmeasurable requirements (what is ambiguous, why it matters, possible interpretations, a clarification question, impact if unresolved) and runs a domain-filtered gap analysis across auth, roles, workflows, validation, error handling, notifications, payments, integrations, security, performance, accessibility, compliance, analytics, admin, backup/recovery, monitoring, localization, audit logging and data retention, bucketed CRITICAL/IMPORTANT/OPTIONAL, then triggers the mid-pipeline validation gate. Use when asked to 'find ambiguities', 'run gap analysis', 'what is missing from the requirements', or after extraction in an analyze/update run.
 argument-hint: "[optional: category filter, e.g. security,payments]"
 ---
 
@@ -15,7 +15,7 @@ After extraction in an `analyze`/`update` run, or standalone when the user says 
 ## Procedure
 
 *To be written in build phase 3.* Covers workflow step(s) 4–5 (+ mid-pipeline gate) of the
-[Business Requirements agent](../../agents/business-requirements.agent.md).
+[Requirements / PM agent](../../agents/requirements.agent.md).
 
 ## Input / output contract
 
