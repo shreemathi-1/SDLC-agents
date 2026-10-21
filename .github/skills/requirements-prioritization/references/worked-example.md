@@ -1,6 +1,6 @@
 # Worked example: US-001 after steps 12–13
 
-- Input: the step 9 output, `scope-dependency-risk/references/worked-example.draft.json`. Steps 10–11 (innovation and trends) have no output yet, so `innovations` and `trends` are empty.
+- Input: the step 11 output, `tech-trend-analysis/references/worked-example.draft.json`, which includes 33 innovations and 9 trends. Neither step changes requirements or priorities.
 - Output: [worked-example.draft.json](worked-example.draft.json).
 
 ## Step 12: questions

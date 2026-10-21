@@ -735,8 +735,1484 @@
       "created_in_run": "2026-10-10T09:00Z"
     }
   ],
-  "innovations": [],
-  "trends": [],
+  "innovations": [
+    {
+      "id": "INN-001",
+      "catalogue_key": "auto-reminders",
+      "generated": false,
+      "title": "Automatic reminders",
+      "description": "Send reminders before due dates or appointments on the user's chosen channel.",
+      "level": 1,
+      "category": "AUTOMATION",
+      "problem_solved": "Patients forget appointments booked weeks in advance.",
+      "business_value": "Fewer no-shows and empty chair time.",
+      "user_value": "A timely nudge before the visit.",
+      "complexity": "S",
+      "dependencies": [
+        "FR-002",
+        "Q-006"
+      ],
+      "risks": [
+        "Message fatigue; consent rules"
+      ],
+      "recommended_phase": "PHASE_2",
+      "technology": [
+        "scheduler",
+        "email/SMS provider"
+      ],
+      "relevance_reason": "Reminders are the client's own open point (Q-006); dental check-ups are booked weeks ahead.",
+      "score": {
+        "relevance": 5,
+        "user_value": 5,
+        "business_value": 5,
+        "effort_inverse": 4,
+        "risk_inverse": 4,
+        "weighted_total": 4.75
+      },
+      "decision": "PENDING",
+      "decision_reason": null,
+      "decided_by": null,
+      "decided_on": null,
+      "promoted_to": null,
+      "created_in_run": "2026-10-10T09:00Z"
+    },
+    {
+      "id": "INN-002",
+      "catalogue_key": "int-calendar-sync",
+      "generated": false,
+      "title": "Personal calendar sync",
+      "description": "Add bookings to Google, Apple or Outlook calendars with updates.",
+      "level": 1,
+      "category": "INTEGRATIONS",
+      "problem_solved": "The appointment is not in the patient's own calendar.",
+      "business_value": "Fewer missed visits at almost no cost.",
+      "user_value": "One tap adds the visit to their calendar.",
+      "complexity": "S",
+      "dependencies": [
+        "FR-001",
+        "FR-002"
+      ],
+      "risks": [
+        "Stale events after changes"
+      ],
+      "recommended_phase": "MVP",
+      "technology": [
+        "iCalendar",
+        "calendar APIs"
+      ],
+      "relevance_reason": "Bookings are made far ahead; patients keep their own calendars.",
+      "score": {
+        "relevance": 5,
+        "user_value": 5,
+        "business_value": 3,
+        "effort_inverse": 4,
+        "risk_inverse": 5,
+        "weighted_total": 4.45
+      },
+      "decision": "PENDING",
+      "decision_reason": null,
+      "decided_by": null,
+      "decided_on": null,
+      "promoted_to": null,
+      "created_in_run": "2026-10-10T09:00Z"
+    },
+    {
+      "id": "INN-003",
+      "catalogue_key": "perf-core-web-vitals",
+      "generated": false,
+      "title": "Core Web Vitals budget",
+      "description": "Set and enforce load-time budgets in the build pipeline.",
+      "level": 1,
+      "category": "PERFORMANCE",
+      "problem_solved": "\"Load fast\" has no shared measure.",
+      "business_value": "Speed becomes testable and tracked.",
+      "user_value": "A quick page on phones.",
+      "complexity": "S",
+      "dependencies": [
+        "NFR-001",
+        "Q-001"
+      ],
+      "risks": [
+        "Budgets ignored without ownership"
+      ],
+      "recommended_phase": "PHASE_2",
+      "technology": [
+        "Lighthouse CI",
+        "RUM"
+      ],
+      "relevance_reason": "Gives NFR-001 a measurable yardstick once the client sets a target.",
+      "score": {
+        "relevance": 5,
+        "user_value": 3,
+        "business_value": 3,
+        "effort_inverse": 5,
+        "risk_inverse": 5,
+        "weighted_total": 4.1
+      },
+      "decision": "PENDING",
+      "decision_reason": null,
+      "decided_by": null,
+      "decided_on": null,
+      "promoted_to": null,
+      "created_in_run": "2026-10-10T09:00Z"
+    },
+    {
+      "id": "INN-004",
+      "catalogue_key": "ux-skeleton-loading",
+      "generated": false,
+      "title": "Skeleton loading screens",
+      "description": "Show the page layout immediately while data loads to cut perceived wait.",
+      "level": 1,
+      "category": "UX",
+      "problem_solved": "Blank screen while slots load.",
+      "business_value": "Lower drop-off on the booking page.",
+      "user_value": "The page feels instant.",
+      "complexity": "S",
+      "dependencies": [
+        "FR-001",
+        "NFR-001"
+      ],
+      "risks": [
+        "Hides real slowness from monitoring"
+      ],
+      "recommended_phase": "MVP",
+      "technology": [
+        "UI components"
+      ],
+      "relevance_reason": "Availability comes from ClinicDesk and may take a moment to load.",
+      "score": {
+        "relevance": 4,
+        "user_value": 3,
+        "business_value": 2,
+        "effort_inverse": 5,
+        "risk_inverse": 5,
+        "weighted_total": 3.6
+      },
+      "decision": "PENDING",
+      "decision_reason": null,
+      "decided_by": null,
+      "decided_on": null,
+      "promoted_to": null,
+      "created_in_run": "2026-10-10T09:00Z"
+    },
+    {
+      "id": "INN-005",
+      "catalogue_key": "sec-magic-links",
+      "generated": false,
+      "title": "Passwordless magic links",
+      "description": "Sign in or confirm identity by a one-time link sent by email or SMS.",
+      "level": 1,
+      "category": "SECURITY",
+      "problem_solved": "Patients do not want another password for a twice-yearly visit.",
+      "business_value": "Identity check without account support load.",
+      "user_value": "Confirm a booking from their inbox.",
+      "complexity": "S",
+      "dependencies": [
+        "FR-002",
+        "Q-004"
+      ],
+      "risks": [
+        "Email account takeover"
+      ],
+      "recommended_phase": "PHASE_2",
+      "technology": [
+        "signed tokens"
+      ],
+      "relevance_reason": "One of the answers to Q-004 (how patients identify) without passwords.",
+      "score": {
+        "relevance": 4,
+        "user_value": 4,
+        "business_value": 3,
+        "effort_inverse": 4,
+        "risk_inverse": 4,
+        "weighted_total": 3.8
+      },
+      "decision": "PENDING",
+      "decision_reason": null,
+      "decided_by": null,
+      "decided_on": null,
+      "promoted_to": null,
+      "created_in_run": "2026-10-10T09:00Z"
+    },
+    {
+      "id": "INN-006",
+      "catalogue_key": "auto-rebooking",
+      "generated": false,
+      "title": "One-tap reschedule links",
+      "description": "Include a secure link in messages that lets people move their booking.",
+      "level": 1,
+      "category": "AUTOMATION",
+      "problem_solved": "Changing an appointment needs a phone call.",
+      "business_value": "Freed slots can be rebooked.",
+      "user_value": "Move a visit without calling.",
+      "complexity": "S",
+      "dependencies": [
+        "FR-002",
+        "Q-007"
+      ],
+      "risks": [
+        "Link forwarding to others"
+      ],
+      "recommended_phase": "PHASE_2",
+      "technology": [
+        "signed links"
+      ],
+      "relevance_reason": "Relevant only if the client allows online changes (Q-007).",
+      "score": {
+        "relevance": 4,
+        "user_value": 4,
+        "business_value": 4,
+        "effort_inverse": 4,
+        "risk_inverse": 4,
+        "weighted_total": 4
+      },
+      "decision": "PENDING",
+      "decision_reason": null,
+      "decided_by": null,
+      "decided_on": null,
+      "promoted_to": null,
+      "created_in_run": "2026-10-10T09:00Z"
+    },
+    {
+      "id": "INN-007",
+      "catalogue_key": "an-funnel-tracking",
+      "generated": false,
+      "title": "Funnel analytics",
+      "description": "Track where users drop out of key flows such as sign-up or booking.",
+      "level": 1,
+      "category": "ANALYTICS",
+      "problem_solved": "No evidence of where patients give up.",
+      "business_value": "Proves the business case of online booking.",
+      "user_value": "Indirect: a smoother flow over time.",
+      "complexity": "S",
+      "dependencies": [
+        "FR-001",
+        "Q-005"
+      ],
+      "risks": [
+        "Privacy and consent"
+      ],
+      "recommended_phase": "PHASE_2",
+      "technology": [
+        "product analytics"
+      ],
+      "relevance_reason": "Shows whether online booking actually replaces phone calls, the client's stated goal.",
+      "score": {
+        "relevance": 4,
+        "user_value": 2,
+        "business_value": 4,
+        "effort_inverse": 5,
+        "risk_inverse": 4,
+        "weighted_total": 3.65
+      },
+      "decision": "PENDING",
+      "decision_reason": null,
+      "decided_by": null,
+      "decided_on": null,
+      "promoted_to": null,
+      "created_in_run": "2026-10-10T09:00Z"
+    },
+    {
+      "id": "INN-008",
+      "catalogue_key": "eng-reviews",
+      "generated": false,
+      "title": "Post-visit reviews",
+      "description": "Ask for a rating after a visit or order and route low scores to staff.",
+      "level": 1,
+      "category": "ENGAGEMENT",
+      "problem_solved": "Happy patients rarely leave reviews unprompted.",
+      "business_value": "More new-patient bookings.",
+      "user_value": "An easy way to give feedback.",
+      "complexity": "S",
+      "dependencies": [
+        "FR-002"
+      ],
+      "risks": [
+        "Review-gating rules on some platforms"
+      ],
+      "recommended_phase": "MVP",
+      "technology": [
+        "survey",
+        "review platform"
+      ],
+      "relevance_reason": "Local practices win new patients through reviews.",
+      "score": {
+        "relevance": 4,
+        "user_value": 3,
+        "business_value": 4,
+        "effort_inverse": 4,
+        "risk_inverse": 4,
+        "weighted_total": 3.75
+      },
+      "decision": "PENDING",
+      "decision_reason": null,
+      "decided_by": null,
+      "decided_on": null,
+      "promoted_to": null,
+      "created_in_run": "2026-10-10T09:00Z"
+    },
+    {
+      "id": "INN-009",
+      "catalogue_key": "sec-bot-protection",
+      "generated": false,
+      "title": "Bot and abuse protection",
+      "description": "Stop automated sign-ups, scraping and fake bookings without CAPTCHAs for most users.",
+      "level": 1,
+      "category": "SECURITY",
+      "problem_solved": "Bots or pranksters can fill the calendar.",
+      "business_value": "Protects real capacity.",
+      "user_value": "Real slots stay available.",
+      "complexity": "S",
+      "dependencies": [
+        "FR-001"
+      ],
+      "risks": [
+        "Blocking real users"
+      ],
+      "recommended_phase": "MVP",
+      "technology": [
+        "bot detection",
+        "rate limiting"
+      ],
+      "relevance_reason": "A public booking page without login (Q-004 open) invites fake bookings.",
+      "score": {
+        "relevance": 4,
+        "user_value": 2,
+        "business_value": 4,
+        "effort_inverse": 4,
+        "risk_inverse": 4,
+        "weighted_total": 3.5
+      },
+      "decision": "PENDING",
+      "decision_reason": null,
+      "decided_by": null,
+      "decided_on": null,
+      "promoted_to": null,
+      "created_in_run": "2026-10-10T09:00Z"
+    },
+    {
+      "id": "INN-010",
+      "catalogue_key": "mob-qr-checkin",
+      "generated": false,
+      "title": "QR code check-in",
+      "description": "Check in on arrival by scanning a QR code.",
+      "level": 1,
+      "category": "MOBILE_OFFLINE",
+      "problem_solved": "Patients queue at reception to say they have arrived.",
+      "business_value": "Less front-desk load.",
+      "user_value": "Check in without queuing.",
+      "complexity": "S",
+      "dependencies": [
+        "FR-001"
+      ],
+      "risks": [
+        "Shared or screenshot codes"
+      ],
+      "recommended_phase": "MVP",
+      "technology": [
+        "QR generation",
+        "kiosk or staff scan"
+      ],
+      "relevance_reason": "The front desk is swamped; self check-in removes one task.",
+      "score": {
+        "relevance": 3,
+        "user_value": 3,
+        "business_value": 3,
+        "effort_inverse": 4,
+        "risk_inverse": 4,
+        "weighted_total": 3.25
+      },
+      "decision": "PENDING",
+      "decision_reason": null,
+      "decided_by": null,
+      "decided_on": null,
+      "promoted_to": null,
+      "created_in_run": "2026-10-10T09:00Z"
+    },
+    {
+      "id": "INN-011",
+      "catalogue_key": "pers-preferred-provider",
+      "generated": false,
+      "title": "Preferred provider memory",
+      "description": "Remember the person's preferred professional or location and default to it.",
+      "level": 1,
+      "category": "PERSONALIZATION",
+      "problem_solved": "Patients pick their dentist again every time.",
+      "business_value": "Continuity of care.",
+      "user_value": "Their dentist is pre-selected.",
+      "complexity": "S",
+      "dependencies": [
+        "FR-001",
+        "Q-004"
+      ],
+      "risks": [
+        "Locks users into one provider"
+      ],
+      "recommended_phase": "PHASE_2",
+      "technology": [
+        "user preferences"
+      ],
+      "relevance_reason": "Patients usually return to the same dentist; needs a way to recognise them (Q-004).",
+      "score": {
+        "relevance": 3,
+        "user_value": 4,
+        "business_value": 3,
+        "effort_inverse": 4,
+        "risk_inverse": 4,
+        "weighted_total": 3.5
+      },
+      "decision": "PENDING",
+      "decision_reason": null,
+      "decided_by": null,
+      "decided_on": null,
+      "promoted_to": null,
+      "created_in_run": "2026-10-10T09:00Z"
+    },
+    {
+      "id": "INN-012",
+      "catalogue_key": "ux-calendar-availability-view",
+      "generated": false,
+      "title": "Visual availability calendar",
+      "description": "Show free slots across days at a glance with the soonest option highlighted.",
+      "level": 2,
+      "category": "UX",
+      "problem_solved": "Hunting day by day for a free slot.",
+      "business_value": "Higher booking completion.",
+      "user_value": "See the soonest slot at a glance.",
+      "complexity": "M",
+      "dependencies": [
+        "FR-001",
+        "IR-001"
+      ],
+      "risks": [
+        "Slow on large calendars"
+      ],
+      "recommended_phase": "PHASE_2",
+      "technology": [
+        "calendar component"
+      ],
+      "relevance_reason": "FR-001 is a calendar pick; showing several days at once helps patients find a slot fast.",
+      "score": {
+        "relevance": 5,
+        "user_value": 5,
+        "business_value": 4,
+        "effort_inverse": 3,
+        "risk_inverse": 4,
+        "weighted_total": 4.4
+      },
+      "decision": "PENDING",
+      "decision_reason": null,
+      "decided_by": null,
+      "decided_on": null,
+      "promoted_to": null,
+      "created_in_run": "2026-10-10T09:00Z"
+    },
+    {
+      "id": "INN-013",
+      "catalogue_key": "perf-availability-cache",
+      "generated": false,
+      "title": "Cached availability with live confirm",
+      "description": "Show availability from a fast cache and confirm against the master system at checkout.",
+      "level": 2,
+      "category": "PERFORMANCE",
+      "problem_solved": "Every page view queries ClinicDesk live.",
+      "business_value": "Fast pages without overloading ClinicDesk.",
+      "user_value": "Slots appear quickly.",
+      "complexity": "M",
+      "dependencies": [
+        "IR-001",
+        "NFR-001",
+        "RISK-001"
+      ],
+      "risks": [
+        "Shown slot already taken"
+      ],
+      "recommended_phase": "PHASE_2",
+      "technology": [
+        "cache",
+        "background sync"
+      ],
+      "relevance_reason": "ClinicDesk may be slow or rate-limited (RISK-001); a cache with live confirmation protects NFR-001.",
+      "score": {
+        "relevance": 5,
+        "user_value": 4,
+        "business_value": 3,
+        "effort_inverse": 3,
+        "risk_inverse": 3,
+        "weighted_total": 3.85
+      },
+      "decision": "PENDING",
+      "decision_reason": null,
+      "decided_by": null,
+      "decided_on": null,
+      "promoted_to": null,
+      "created_in_run": "2026-10-10T09:00Z"
+    },
+    {
+      "id": "INN-014",
+      "catalogue_key": "perf-resilience-fallback",
+      "generated": false,
+      "title": "Graceful degradation",
+      "description": "Keep core flows usable when a dependency fails, with clear fallback messages.",
+      "level": 2,
+      "category": "PERFORMANCE",
+      "problem_solved": "A ClinicDesk outage breaks booking with no explanation.",
+      "business_value": "Bookings fall back to phone gracefully, not lost.",
+      "user_value": "A clear message instead of an error page.",
+      "complexity": "M",
+      "dependencies": [
+        "IR-001",
+        "Q-008"
+      ],
+      "risks": [
+        "Hidden partial outages"
+      ],
+      "recommended_phase": "PHASE_2",
+      "technology": [
+        "circuit breaker",
+        "fallbacks"
+      ],
+      "relevance_reason": "Directly addresses the ERROR_HANDLING gap (Q-008).",
+      "score": {
+        "relevance": 5,
+        "user_value": 3,
+        "business_value": 4,
+        "effort_inverse": 3,
+        "risk_inverse": 4,
+        "weighted_total": 3.9
+      },
+      "decision": "PENDING",
+      "decision_reason": null,
+      "decided_by": null,
+      "decided_on": null,
+      "promoted_to": null,
+      "created_in_run": "2026-10-10T09:00Z"
+    },
+    {
+      "id": "INN-015",
+      "catalogue_key": "auto-waitlist",
+      "generated": false,
+      "title": "Waitlist with automatic offers",
+      "description": "When a slot or item frees up, offer it to the next person on the waitlist.",
+      "level": 2,
+      "category": "AUTOMATION",
+      "problem_solved": "Cancelled slots stay empty.",
+      "business_value": "Recovers revenue from cancellations.",
+      "user_value": "Get an earlier slot when one frees up.",
+      "complexity": "M",
+      "dependencies": [
+        "FR-001",
+        "BR-002"
+      ],
+      "risks": [
+        "Race conditions on popular slots"
+      ],
+      "recommended_phase": "PHASE_2",
+      "technology": [
+        "job queue",
+        "notifications"
+      ],
+      "relevance_reason": "Popular slots fill quickly; cancellations otherwise go unused.",
+      "score": {
+        "relevance": 4,
+        "user_value": 4,
+        "business_value": 5,
+        "effort_inverse": 3,
+        "risk_inverse": 3,
+        "weighted_total": 3.95
+      },
+      "decision": "PENDING",
+      "decision_reason": null,
+      "decided_by": null,
+      "decided_on": null,
+      "promoted_to": null,
+      "created_in_run": "2026-10-10T09:00Z"
+    },
+    {
+      "id": "INN-016",
+      "catalogue_key": "eng-recall-campaigns",
+      "generated": false,
+      "title": "Recall and re-engagement campaigns",
+      "description": "Invite customers back when a periodic visit or renewal is due.",
+      "level": 2,
+      "category": "ENGAGEMENT",
+      "problem_solved": "Patients forget their next check-up is due.",
+      "business_value": "Steady stream of repeat bookings.",
+      "user_value": "A reminder when a check-up is due, with a booking link.",
+      "complexity": "M",
+      "dependencies": [
+        "IR-001",
+        "FR-002",
+        "Q-005"
+      ],
+      "risks": [
+        "Consent and frequency limits"
+      ],
+      "recommended_phase": "PHASE_2",
+      "technology": [
+        "campaign scheduler"
+      ],
+      "relevance_reason": "Dental check-ups recur every 6–12 months; visit history sits in ClinicDesk.",
+      "score": {
+        "relevance": 4,
+        "user_value": 4,
+        "business_value": 5,
+        "effort_inverse": 3,
+        "risk_inverse": 3,
+        "weighted_total": 3.95
+      },
+      "decision": "PENDING",
+      "decision_reason": null,
+      "decided_by": null,
+      "decided_on": null,
+      "promoted_to": null,
+      "created_in_run": "2026-10-10T09:00Z"
+    },
+    {
+      "id": "INN-017",
+      "catalogue_key": "auto-intake-forms",
+      "generated": false,
+      "title": "Pre-visit digital intake",
+      "description": "Collect forms and consents before the visit instead of on paper at reception.",
+      "level": 2,
+      "category": "AUTOMATION",
+      "problem_solved": "Paper forms at reception slow the front desk.",
+      "business_value": "Shorter check-in, cleaner records.",
+      "user_value": "Fill forms at home.",
+      "complexity": "M",
+      "dependencies": [
+        "FR-001",
+        "Q-005"
+      ],
+      "risks": [
+        "Sensitive data captured early"
+      ],
+      "recommended_phase": "PHASE_2",
+      "technology": [
+        "form builder",
+        "e-signature"
+      ],
+      "relevance_reason": "Health questionnaires are filled at reception today; they could be done after booking.",
+      "score": {
+        "relevance": 4,
+        "user_value": 4,
+        "business_value": 4,
+        "effort_inverse": 3,
+        "risk_inverse": 3,
+        "weighted_total": 3.75
+      },
+      "decision": "PENDING",
+      "decision_reason": null,
+      "decided_by": null,
+      "decided_on": null,
+      "promoted_to": null,
+      "created_in_run": "2026-10-10T09:00Z"
+    },
+    {
+      "id": "INN-018",
+      "catalogue_key": "int-booking-widget",
+      "generated": false,
+      "title": "Embeddable booking widget",
+      "description": "Let partners or the client's own site embed booking.",
+      "level": 2,
+      "category": "INTEGRATIONS",
+      "problem_solved": "Patients must find a separate booking site.",
+      "business_value": "More bookings from the existing website.",
+      "user_value": "Book from the practice website directly.",
+      "complexity": "M",
+      "dependencies": [
+        "FR-001"
+      ],
+      "risks": [
+        "Styling conflicts on host sites"
+      ],
+      "recommended_phase": "PHASE_2",
+      "technology": [
+        "embed script",
+        "iframe"
+      ],
+      "relevance_reason": "The practice likely has a website where booking should live.",
+      "score": {
+        "relevance": 4,
+        "user_value": 3,
+        "business_value": 4,
+        "effort_inverse": 3,
+        "risk_inverse": 4,
+        "weighted_total": 3.6
+      },
+      "decision": "PENDING",
+      "decision_reason": null,
+      "decided_by": null,
+      "decided_on": null,
+      "promoted_to": null,
+      "created_in_run": "2026-10-10T09:00Z"
+    },
+    {
+      "id": "INN-019",
+      "catalogue_key": "int-messaging-channels",
+      "generated": false,
+      "title": "WhatsApp and SMS channels",
+      "description": "Message customers on the channels they already use.",
+      "level": 2,
+      "category": "INTEGRATIONS",
+      "problem_solved": "Emails go unread.",
+      "business_value": "Higher message reach.",
+      "user_value": "Messages on the channel they use.",
+      "complexity": "M",
+      "dependencies": [
+        "FR-002",
+        "Q-006"
+      ],
+      "risks": [
+        "Channel costs and opt-in rules"
+      ],
+      "recommended_phase": "PHASE_2",
+      "technology": [
+        "messaging provider"
+      ],
+      "relevance_reason": "Confirmations and reminders may reach patients better by SMS or WhatsApp than email.",
+      "score": {
+        "relevance": 4,
+        "user_value": 4,
+        "business_value": 3,
+        "effort_inverse": 3,
+        "risk_inverse": 3,
+        "weighted_total": 3.55
+      },
+      "decision": "PENDING",
+      "decision_reason": null,
+      "decided_by": null,
+      "decided_on": null,
+      "promoted_to": null,
+      "created_in_run": "2026-10-10T09:00Z"
+    },
+    {
+      "id": "INN-020",
+      "catalogue_key": "ux-accessible-design-system",
+      "generated": false,
+      "title": "Accessible design system",
+      "description": "Shared components that meet WCAG 2.2 AA by default.",
+      "level": 2,
+      "category": "UX",
+      "problem_solved": "Accessibility fixed screen by screen, late.",
+      "business_value": "Lower legal and rework risk.",
+      "user_value": "Usable with screen readers and large text.",
+      "complexity": "M",
+      "dependencies": [
+        "FR-001",
+        "Q-009"
+      ],
+      "risks": [
+        "Upfront effort before features ship"
+      ],
+      "recommended_phase": "PHASE_2",
+      "technology": [
+        "design tokens",
+        "component library"
+      ],
+      "relevance_reason": "Supports whichever accessibility standard Q-009 settles on.",
+      "score": {
+        "relevance": 4,
+        "user_value": 4,
+        "business_value": 3,
+        "effort_inverse": 3,
+        "risk_inverse": 4,
+        "weighted_total": 3.65
+      },
+      "decision": "PENDING",
+      "decision_reason": null,
+      "decided_by": null,
+      "decided_on": null,
+      "promoted_to": null,
+      "created_in_run": "2026-10-10T09:00Z"
+    },
+    {
+      "id": "INN-021",
+      "catalogue_key": "sec-consent-management",
+      "generated": false,
+      "title": "Consent management",
+      "description": "Record and honour each person's consents with history.",
+      "level": 2,
+      "category": "SECURITY",
+      "problem_solved": "Consent is not recorded anywhere.",
+      "business_value": "Evidence of compliance.",
+      "user_value": "Control over how they are contacted.",
+      "complexity": "M",
+      "dependencies": [
+        "Q-005",
+        "FR-002"
+      ],
+      "risks": [
+        "Consents out of sync across systems"
+      ],
+      "recommended_phase": "PHASE_2",
+      "technology": [
+        "consent store"
+      ],
+      "relevance_reason": "Health data and patient messaging both need recorded consent once the regime is known (Q-005).",
+      "score": {
+        "relevance": 4,
+        "user_value": 3,
+        "business_value": 4,
+        "effort_inverse": 3,
+        "risk_inverse": 3,
+        "weighted_total": 3.5
+      },
+      "decision": "PENDING",
+      "decision_reason": null,
+      "decided_by": null,
+      "decided_on": null,
+      "promoted_to": null,
+      "created_in_run": "2026-10-10T09:00Z"
+    },
+    {
+      "id": "INN-022",
+      "catalogue_key": "sec-audit-trail",
+      "generated": false,
+      "title": "Tamper-evident audit trail",
+      "description": "Record who viewed or changed what, in a log that cannot be edited.",
+      "level": 2,
+      "category": "SECURITY",
+      "problem_solved": "No record of who saw or changed a booking.",
+      "business_value": "Audit readiness.",
+      "user_value": "Trust that their data is watched.",
+      "complexity": "M",
+      "dependencies": [
+        "Q-005",
+        "IR-001"
+      ],
+      "risks": [
+        "Storage growth"
+      ],
+      "recommended_phase": "PHASE_2",
+      "technology": [
+        "append-only log"
+      ],
+      "relevance_reason": "Healthcare regimes usually require knowing who accessed booking data (Q-005).",
+      "score": {
+        "relevance": 4,
+        "user_value": 2,
+        "business_value": 4,
+        "effort_inverse": 3,
+        "risk_inverse": 4,
+        "weighted_total": 3.35
+      },
+      "decision": "PENDING",
+      "decision_reason": null,
+      "decided_by": null,
+      "decided_on": null,
+      "promoted_to": null,
+      "created_in_run": "2026-10-10T09:00Z"
+    },
+    {
+      "id": "INN-023",
+      "catalogue_key": "an-utilisation",
+      "generated": false,
+      "title": "Capacity utilisation report",
+      "description": "Show how full calendars, rooms or vehicles are, by hour and resource.",
+      "level": 2,
+      "category": "ANALYTICS",
+      "problem_solved": "No view of empty chair time.",
+      "business_value": "Better scheduling decisions.",
+      "user_value": "Indirect: more convenient hours offered.",
+      "complexity": "M",
+      "dependencies": [
+        "IR-001"
+      ],
+      "risks": [
+        "Misread without context"
+      ],
+      "recommended_phase": "PHASE_2",
+      "technology": [
+        "reporting queries"
+      ],
+      "relevance_reason": "The practice can see which dentists and hours are under-booked.",
+      "score": {
+        "relevance": 4,
+        "user_value": 2,
+        "business_value": 5,
+        "effort_inverse": 3,
+        "risk_inverse": 4,
+        "weighted_total": 3.55
+      },
+      "decision": "PENDING",
+      "decision_reason": null,
+      "decided_by": null,
+      "decided_on": null,
+      "promoted_to": null,
+      "created_in_run": "2026-10-10T09:00Z"
+    },
+    {
+      "id": "INN-024",
+      "catalogue_key": "auto-recurring",
+      "generated": false,
+      "title": "Recurring bookings and orders",
+      "description": "Set up repeating appointments, orders or tasks once.",
+      "level": 2,
+      "category": "AUTOMATION",
+      "problem_solved": "Patients rebook the same check-up every time.",
+      "business_value": "Locks in repeat visits.",
+      "user_value": "Book the series once.",
+      "complexity": "M",
+      "dependencies": [
+        "FR-001",
+        "BR-001"
+      ],
+      "risks": [
+        "Conflicts when calendars change"
+      ],
+      "recommended_phase": "PHASE_2",
+      "technology": [
+        "recurrence rules (RRULE)"
+      ],
+      "relevance_reason": "Regular check-ups could be booked as a series, limited by the 60-day window (BR-001).",
+      "score": {
+        "relevance": 3,
+        "user_value": 4,
+        "business_value": 3,
+        "effort_inverse": 3,
+        "risk_inverse": 3,
+        "weighted_total": 3.25
+      },
+      "decision": "PENDING",
+      "decision_reason": null,
+      "decided_by": null,
+      "decided_on": null,
+      "promoted_to": null,
+      "created_in_run": "2026-10-10T09:00Z"
+    },
+    {
+      "id": "INN-025",
+      "catalogue_key": "int-google-reserve",
+      "generated": false,
+      "title": "Book from search and maps",
+      "description": "Let people book directly from search-engine and map listings.",
+      "level": 3,
+      "category": "INTEGRATIONS",
+      "problem_solved": "New patients leave search to find a booking page.",
+      "business_value": "New-patient acquisition.",
+      "user_value": "Book straight from search results.",
+      "complexity": "M",
+      "dependencies": [
+        "FR-001",
+        "IR-001"
+      ],
+      "risks": [
+        "Partner programme eligibility"
+      ],
+      "recommended_phase": "PHASE_3",
+      "technology": [
+        "reservation partner APIs"
+      ],
+      "relevance_reason": "New patients search for dentists on maps and search engines.",
+      "score": {
+        "relevance": 4,
+        "user_value": 3,
+        "business_value": 5,
+        "effort_inverse": 3,
+        "risk_inverse": 3,
+        "weighted_total": 3.7
+      },
+      "decision": "PENDING",
+      "decision_reason": null,
+      "decided_by": null,
+      "decided_on": null,
+      "promoted_to": null,
+      "created_in_run": "2026-10-10T09:00Z"
+    },
+    {
+      "id": "INN-026",
+      "catalogue_key": "ai-no-show-prediction",
+      "generated": false,
+      "title": "No-show risk prediction",
+      "description": "Score each booking's no-show risk so staff can remind or overbook carefully.",
+      "level": 3,
+      "category": "AI",
+      "problem_solved": "No-shows are not anticipated.",
+      "business_value": "Targeted reminders where they matter.",
+      "user_value": "Fewer reminder messages for reliable patients.",
+      "complexity": "L",
+      "dependencies": [
+        "IR-001",
+        "Q-005"
+      ],
+      "risks": [
+        "Bias against patient groups; needs history"
+      ],
+      "recommended_phase": "PHASE_3",
+      "technology": [
+        "classification model"
+      ],
+      "relevance_reason": "Visit history in ClinicDesk could predict no-shows; health-data rules (Q-005) apply.",
+      "score": {
+        "relevance": 4,
+        "user_value": 2,
+        "business_value": 5,
+        "effort_inverse": 2,
+        "risk_inverse": 2,
+        "weighted_total": 3.2
+      },
+      "decision": "PENDING",
+      "decision_reason": null,
+      "decided_by": null,
+      "decided_on": null,
+      "promoted_to": null,
+      "created_in_run": "2026-10-10T09:00Z"
+    },
+    {
+      "id": "INN-027",
+      "catalogue_key": "ai-booking-assistant",
+      "generated": false,
+      "title": "Chat or voice booking assistant",
+      "description": "Book, move or cancel appointments by chat or phone voice agent.",
+      "level": 3,
+      "category": "AI",
+      "problem_solved": "Phone bookings only during opening hours.",
+      "business_value": "Takes load off the front desk.",
+      "user_value": "Book by chat or phone at any hour.",
+      "complexity": "L",
+      "dependencies": [
+        "FR-001",
+        "IR-001"
+      ],
+      "risks": [
+        "Misbooked appointments; accessibility of voice"
+      ],
+      "recommended_phase": "PHASE_3",
+      "technology": [
+        "LLM",
+        "speech-to-text",
+        "tool calling"
+      ],
+      "relevance_reason": "The swamped phone line is the client's stated problem; a voice or chat agent could take bookings.",
+      "score": {
+        "relevance": 3,
+        "user_value": 4,
+        "business_value": 4,
+        "effort_inverse": 2,
+        "risk_inverse": 2,
+        "weighted_total": 3.2
+      },
+      "decision": "PENDING",
+      "decision_reason": null,
+      "decided_by": null,
+      "decided_on": null,
+      "promoted_to": null,
+      "created_in_run": "2026-10-10T09:00Z"
+    },
+    {
+      "id": "INN-028",
+      "catalogue_key": "int-insurance-check",
+      "generated": false,
+      "title": "Insurance eligibility check",
+      "description": "Check a patient's insurance cover before the visit.",
+      "level": 3,
+      "category": "INTEGRATIONS",
+      "problem_solved": "Cover surprises at the desk.",
+      "business_value": "Fewer payment disputes.",
+      "user_value": "Know what is covered before the visit.",
+      "complexity": "L",
+      "dependencies": [
+        "Q-005",
+        "IR-001"
+      ],
+      "risks": [
+        "Coverage varies by insurer and country"
+      ],
+      "recommended_phase": "PHASE_3",
+      "technology": [
+        "insurer or clearing-house API"
+      ],
+      "relevance_reason": "Depends on the country and insurers (Q-005); valuable where dental insurance is common.",
+      "score": {
+        "relevance": 3,
+        "user_value": 4,
+        "business_value": 4,
+        "effort_inverse": 2,
+        "risk_inverse": 2,
+        "weighted_total": 3.2
+      },
+      "decision": "PENDING",
+      "decision_reason": null,
+      "decided_by": null,
+      "decided_on": null,
+      "promoted_to": null,
+      "created_in_run": "2026-10-10T09:00Z"
+    },
+    {
+      "id": "INN-029",
+      "catalogue_key": "sec-field-encryption",
+      "generated": false,
+      "title": "Field-level encryption",
+      "description": "Encrypt the most sensitive fields so even database admins cannot read them.",
+      "level": 3,
+      "category": "SECURITY",
+      "problem_solved": "Sensitive fields readable by anyone with database access.",
+      "business_value": "Lower breach impact.",
+      "user_value": "Stronger protection of their data.",
+      "complexity": "M",
+      "dependencies": [
+        "Q-005"
+      ],
+      "risks": [
+        "Search and reporting become harder"
+      ],
+      "recommended_phase": "PHASE_3",
+      "technology": [
+        "KMS",
+        "envelope encryption"
+      ],
+      "relevance_reason": "Treatment type and identity together are sensitive health data.",
+      "score": {
+        "relevance": 3,
+        "user_value": 2,
+        "business_value": 3,
+        "effort_inverse": 3,
+        "risk_inverse": 4,
+        "weighted_total": 2.85
+      },
+      "decision": "PENDING",
+      "decision_reason": null,
+      "decided_by": null,
+      "decided_on": null,
+      "promoted_to": null,
+      "created_in_run": "2026-10-10T09:00Z"
+    },
+    {
+      "id": "INN-030",
+      "catalogue_key": "eng-preventive-nudges",
+      "generated": false,
+      "title": "Preventive care or maintenance nudges",
+      "description": "Prompt people about preventive actions based on their history.",
+      "level": 3,
+      "category": "ENGAGEMENT",
+      "problem_solved": "Preventive care is forgotten between visits.",
+      "business_value": "Healthier patients, steadier visits.",
+      "user_value": "Helpful prompts between check-ups.",
+      "complexity": "M",
+      "dependencies": [
+        "IR-001",
+        "Q-005"
+      ],
+      "risks": [
+        "Medical or financial advice regulation"
+      ],
+      "recommended_phase": "PHASE_3",
+      "technology": [
+        "rules engine"
+      ],
+      "relevance_reason": "Oral-health reminders tied to visit history; must avoid giving medical advice.",
+      "score": {
+        "relevance": 3,
+        "user_value": 3,
+        "business_value": 3,
+        "effort_inverse": 3,
+        "risk_inverse": 2,
+        "weighted_total": 2.9
+      },
+      "decision": "PENDING",
+      "decision_reason": null,
+      "decided_by": null,
+      "decided_on": null,
+      "promoted_to": null,
+      "created_in_run": "2026-10-10T09:00Z"
+    },
+    {
+      "id": "INN-031",
+      "catalogue_key": null,
+      "generated": true,
+      "title": "Treatment-plan booking",
+      "description": "Book every visit of a multi-step treatment plan in one go, sequenced as the dentist planned.",
+      "level": 4,
+      "category": "COLLABORATION",
+      "problem_solved": "Multi-visit treatments are booked one call at a time.",
+      "business_value": "Plans completed on time; fewer abandoned treatments.",
+      "user_value": "All visits booked at once.",
+      "complexity": "L",
+      "dependencies": [
+        "FR-001",
+        "IR-001",
+        "BR-001",
+        "ClinicDesk treatment-plan data"
+      ],
+      "risks": [
+        "Plans change after each visit",
+        "BR-001 60-day window may cut a plan short"
+      ],
+      "recommended_phase": "FUTURE",
+      "technology": [
+        "ClinicDesk treatment-plan data"
+      ],
+      "relevance_reason": "Extends FR-001 beyond single check-ups; depends on what ClinicDesk exposes.",
+      "score": {
+        "relevance": 3,
+        "user_value": 4,
+        "business_value": 4,
+        "effort_inverse": 2,
+        "risk_inverse": 2,
+        "weighted_total": 3.2
+      },
+      "decision": "PENDING",
+      "decision_reason": null,
+      "decided_by": null,
+      "decided_on": null,
+      "promoted_to": null,
+      "created_in_run": "2026-10-10T09:00Z"
+    },
+    {
+      "id": "INN-032",
+      "catalogue_key": null,
+      "generated": true,
+      "title": "Family check-up day",
+      "description": "Book back-to-back check-ups for a whole household in one trip.",
+      "level": 4,
+      "category": "PERSONALIZATION",
+      "problem_solved": "Parents make separate calls and trips for each child.",
+      "business_value": "Fills adjacent slots; family loyalty.",
+      "user_value": "One trip for the whole family.",
+      "complexity": "M",
+      "dependencies": [
+        "FR-001",
+        "Q-004",
+        "household or dependant records"
+      ],
+      "risks": [
+        "Consent for adult dependants"
+      ],
+      "recommended_phase": "FUTURE",
+      "technology": [
+        "household or dependant records"
+      ],
+      "relevance_reason": "Families often share a dentist; needs a way to book for dependants (Q-004).",
+      "score": {
+        "relevance": 3,
+        "user_value": 4,
+        "business_value": 3,
+        "effort_inverse": 3,
+        "risk_inverse": 3,
+        "weighted_total": 3.25
+      },
+      "decision": "PENDING",
+      "decision_reason": null,
+      "decided_by": null,
+      "decided_on": null,
+      "promoted_to": null,
+      "created_in_run": "2026-10-10T09:00Z"
+    },
+    {
+      "id": "INN-033",
+      "catalogue_key": null,
+      "generated": true,
+      "title": "Smile timeline",
+      "description": "Patients see their visit history and the dentist's shared notes and images over time.",
+      "level": 4,
+      "category": "ENGAGEMENT",
+      "problem_solved": "Patients have no view of their own dental history.",
+      "business_value": "Differentiates the practice; more engaged patients.",
+      "user_value": "A personal record of their dental health.",
+      "complexity": "L",
+      "dependencies": [
+        "IR-001",
+        "Q-004",
+        "Q-005",
+        "ClinicDesk record access",
+        "patient accounts"
+      ],
+      "risks": [
+        "Exposes health records online",
+        "Clinical sign-off of shared notes"
+      ],
+      "recommended_phase": "FUTURE",
+      "technology": [
+        "ClinicDesk record access",
+        "patient accounts"
+      ],
+      "relevance_reason": "Builds on ClinicDesk records; only possible with patient identification and a known health-data regime.",
+      "score": {
+        "relevance": 3,
+        "user_value": 4,
+        "business_value": 3,
+        "effort_inverse": 2,
+        "risk_inverse": 2,
+        "weighted_total": 3
+      },
+      "decision": "PENDING",
+      "decision_reason": null,
+      "decided_by": null,
+      "decided_on": null,
+      "promoted_to": null,
+      "created_in_run": "2026-10-10T09:00Z"
+    }
+  ],
+  "trends": [
+    {
+      "id": "TRD-001",
+      "library_key": "online-self-scheduling",
+      "title": "Online self-scheduling",
+      "description": "Customers expect to book, move and cancel appointments online at any hour.",
+      "adoption_level": "MAINSTREAM",
+      "relevance": "HIGH",
+      "relevance_reason": "The whole product is online self-scheduling; patients compare it with booking elsewhere.",
+      "applies_to": [
+        "FR-001"
+      ],
+      "last_reviewed": "2026-10-10",
+      "verified": false,
+      "verification_note": "unverified; check before client presentation",
+      "sources": [],
+      "recommendation": "ADOPT",
+      "created_in_run": "2026-10-10T09:00Z"
+    },
+    {
+      "id": "TRD-002",
+      "library_key": "two-way-sms-reminders",
+      "title": "Two-way SMS appointment reminders",
+      "description": "Reminders customers can confirm or cancel by reply; widely used to cut no-shows.",
+      "adoption_level": "MAINSTREAM",
+      "relevance": "HIGH",
+      "relevance_reason": "Common answer to no-shows in dental practices; informs the reminders decision (Q-006).",
+      "applies_to": [
+        "INN-001",
+        "INN-019",
+        "Q-006"
+      ],
+      "last_reviewed": "2026-10-10",
+      "verified": false,
+      "verification_note": "unverified; check before client presentation",
+      "sources": [],
+      "recommendation": "TRIAL",
+      "created_in_run": "2026-10-10T09:00Z"
+    },
+    {
+      "id": "TRD-003",
+      "library_key": "core-web-vitals",
+      "title": "Core Web Vitals as the performance yardstick",
+      "description": "LCP, INP and CLS measured on real users are the common way to set web performance targets.",
+      "adoption_level": "MAINSTREAM",
+      "relevance": "HIGH",
+      "relevance_reason": "Gives the client a standard way to state the NFR-001 target.",
+      "applies_to": [
+        "NFR-001",
+        "Q-001"
+      ],
+      "last_reviewed": "2026-10-10",
+      "verified": false,
+      "verification_note": "unverified; check before client presentation",
+      "sources": [],
+      "recommendation": "ADOPT",
+      "created_in_run": "2026-10-10T09:00Z"
+    },
+    {
+      "id": "TRD-004",
+      "library_key": "accessibility-regulation",
+      "title": "Accessibility laws for digital services",
+      "description": "Laws increasingly require WCAG-level accessibility for consumer-facing digital services.",
+      "adoption_level": "GROWING",
+      "relevance": "HIGH",
+      "relevance_reason": "A public healthcare booking page is likely covered; check which law applies (Q-005, Q-009).",
+      "applies_to": [
+        "Q-009",
+        "INN-020"
+      ],
+      "last_reviewed": "2026-10-10",
+      "verified": false,
+      "verification_note": "unverified; check before client presentation",
+      "sources": [],
+      "recommendation": "ADOPT",
+      "created_in_run": "2026-10-10T09:00Z"
+    },
+    {
+      "id": "TRD-005",
+      "library_key": "passkeys",
+      "title": "Passkeys replacing passwords",
+      "description": "Sign-in with device-bound WebAuthn credentials, supported by the major platforms.",
+      "adoption_level": "GROWING",
+      "relevance": "MEDIUM",
+      "relevance_reason": "An option for Q-004 if patient accounts are chosen; overkill for twice-yearly visits without accounts.",
+      "applies_to": [
+        "Q-004",
+        "INN-005"
+      ],
+      "last_reviewed": "2026-10-10",
+      "verified": false,
+      "verification_note": "unverified; check before client presentation",
+      "sources": [],
+      "recommendation": "ASSESS",
+      "created_in_run": "2026-10-10T09:00Z"
+    },
+    {
+      "id": "TRD-006",
+      "library_key": "sms-otp-only-mfa",
+      "title": "SMS one-time codes as the only second factor",
+      "description": "SMS codes are vulnerable to SIM swap and phishing; services are moving to app, passkey or push factors.",
+      "adoption_level": "DECLINING",
+      "relevance": "MEDIUM",
+      "relevance_reason": "If identity is checked by code, avoid SMS as the only factor for access to health data.",
+      "applies_to": [
+        "Q-004"
+      ],
+      "last_reviewed": "2026-10-10",
+      "verified": false,
+      "verification_note": "unverified; check before client presentation",
+      "sources": [],
+      "recommendation": "HOLD",
+      "created_in_run": "2026-10-10T09:00Z"
+    },
+    {
+      "id": "TRD-007",
+      "library_key": "invisible-bot-protection",
+      "title": "Invisible bot protection instead of visual CAPTCHAs",
+      "description": "Risk-based, mostly invisible checks replace puzzles that block real users and fail accessibility.",
+      "adoption_level": "GROWING",
+      "relevance": "MEDIUM",
+      "relevance_reason": "Protects a login-free public page without hurting accessibility.",
+      "applies_to": [
+        "INN-009"
+      ],
+      "last_reviewed": "2026-10-10",
+      "verified": false,
+      "verification_note": "unverified; check before client presentation",
+      "sources": [],
+      "recommendation": "TRIAL",
+      "created_in_run": "2026-10-10T09:00Z"
+    },
+    {
+      "id": "TRD-008",
+      "library_key": "voice-ai-agents",
+      "title": "Voice AI agents for phone calls",
+      "description": "AI agents answer phone calls and complete simple tasks such as booking.",
+      "adoption_level": "GROWING",
+      "relevance": "MEDIUM",
+      "relevance_reason": "Targets the client's real problem (busy phone line); maturity and patient acceptance need checking.",
+      "applies_to": [
+        "INN-027"
+      ],
+      "last_reviewed": "2026-10-10",
+      "verified": false,
+      "verification_note": "unverified; check before client presentation",
+      "sources": [],
+      "recommendation": "ASSESS",
+      "created_in_run": "2026-10-10T09:00Z"
+    },
+    {
+      "id": "TRD-009",
+      "library_key": "business-messaging-apps",
+      "title": "Business messaging on WhatsApp and similar apps",
+      "description": "Customers are reached on chat apps they already use, with templates and opt-in.",
+      "adoption_level": "GROWING",
+      "relevance": "LOW",
+      "relevance_reason": "Depends on the country (Q-005) and what patients there use.",
+      "applies_to": [
+        "INN-019"
+      ],
+      "last_reviewed": "2026-10-10",
+      "verified": false,
+      "verification_note": "unverified; check before client presentation",
+      "sources": [],
+      "recommendation": "ASSESS",
+      "created_in_run": "2026-10-10T09:00Z"
+    }
+  ],
   "validation": {
     "last_run": null,
     "gate": "NONE",

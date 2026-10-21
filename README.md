@@ -101,9 +101,9 @@ lists the item in `blocks`, and an NFR with target `UNKNOWN` has origin `UNKNOWN
 | 2b | `user-story-authoring` (step 0, `stories` mode): raw input → `US-###` stories; the old User Story agent is merged in | done |
 | 3 | `requirements-ambiguity-gap`, `business-rules-extraction`, `scope-dependency-risk` (steps 4–9) | done |
 | 4 | `requirements-prioritization` (steps 12–13: questions, MoSCoW, phases, traceability) | done |
-| 5 | `innovation-discovery` (150+ catalogue, scoring), `tech-trend-analysis` | next |
-| 6 | `requirements-validation-gate` incl. contamination test case | — |
+| 5 | `innovation-discovery` (156-entry catalogue, scoring), `tech-trend-analysis` (34-trend library) | done |
+| 6 | `requirements-validation-gate` incl. contamination test case | next |
 | 7 | `requirements-documentation` (templates, all views) | — |
 | 8 | Review checklist + live Copilot run: `stories` on `examples/raw-input/`, then `analyze` | — |
 
-"Done" for phases 2–4 means the procedure, worked example and verify checks are in place. None has been run live in Copilot yet; that happens in phase 8.
+"Done" for phases 2–5 means the procedure, worked example and verify checks are in place. None has been run live in Copilot yet; that happens in phase 8.

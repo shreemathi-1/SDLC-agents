@@ -1,0 +1,381 @@
+{
+ "_about": "Trend library for step 11 (tech-trend-analysis). Adoption levels are the library's last reviewed view, not verified facts: each trend used in a run is either verified with web/fetch (sources recorded) or marked unverified. Keys are permanent.",
+ "last_reviewed": "2026-10-21",
+ "entries": [
+  {
+   "key": "passkeys",
+   "title": "Passkeys replacing passwords",
+   "adoption_level": "GROWING",
+   "domains": [
+    "*"
+   ],
+   "description": "Sign-in with device-bound WebAuthn credentials, supported by the major platforms.",
+   "time_sensitive_claim": "Share of consumer services offering passkeys"
+  },
+  {
+   "key": "sms-otp-only-mfa",
+   "title": "SMS one-time codes as the only second factor",
+   "adoption_level": "DECLINING",
+   "domains": [
+    "*"
+   ],
+   "description": "SMS codes are vulnerable to SIM swap and phishing; services are moving to app, passkey or push factors.",
+   "time_sensitive_claim": "Regulator and standards guidance on SMS OTP"
+  },
+  {
+   "key": "invisible-bot-protection",
+   "title": "Invisible bot protection instead of visual CAPTCHAs",
+   "adoption_level": "GROWING",
+   "domains": [
+    "*"
+   ],
+   "description": "Risk-based, mostly invisible checks replace puzzles that block real users and fail accessibility.",
+   "time_sensitive_claim": "Accessibility guidance on CAPTCHAs"
+  },
+  {
+   "key": "llm-assistants",
+   "title": "LLM assistants inside products",
+   "adoption_level": "GROWING",
+   "domains": [
+    "*"
+   ],
+   "description": "Products embed chat or copilot features built on large language models with tool access.",
+   "time_sensitive_claim": "Typical cost and accuracy of current models"
+  },
+  {
+   "key": "rag-search",
+   "title": "Retrieval-augmented search",
+   "adoption_level": "GROWING",
+   "domains": [
+    "saas-b2b",
+    "media",
+    "edtech",
+    "government",
+    "e-commerce"
+   ],
+   "description": "Answers grounded in the product's own content, retrieved from a vector or hybrid index.",
+   "time_sensitive_claim": "Maturity of hosted vector search"
+  },
+  {
+   "key": "voice-ai-agents",
+   "title": "Voice AI agents for phone calls",
+   "adoption_level": "GROWING",
+   "domains": [
+    "appointment-scheduling",
+    "healthcare",
+    "e-commerce",
+    "logistics"
+   ],
+   "description": "AI agents answer phone calls and complete simple tasks such as booking.",
+   "time_sensitive_claim": "Accuracy and consumer acceptance of voice agents"
+  },
+  {
+   "key": "ai-clinical-scribes",
+   "title": "AI clinical documentation scribes",
+   "adoption_level": "GROWING",
+   "domains": [
+    "healthcare"
+   ],
+   "description": "Ambient AI drafts clinical notes from the consultation for clinician review.",
+   "time_sensitive_claim": "Regulatory status in the target country"
+  },
+  {
+   "key": "online-self-scheduling",
+   "title": "Online self-scheduling",
+   "adoption_level": "MAINSTREAM",
+   "domains": [
+    "appointment-scheduling",
+    "healthcare"
+   ],
+   "description": "Customers expect to book, move and cancel appointments online at any hour.",
+   "time_sensitive_claim": "Share of bookings made online in the sector"
+  },
+  {
+   "key": "two-way-sms-reminders",
+   "title": "Two-way SMS appointment reminders",
+   "adoption_level": "MAINSTREAM",
+   "domains": [
+    "appointment-scheduling",
+    "healthcare"
+   ],
+   "description": "Reminders customers can confirm or cancel by reply; widely used to cut no-shows.",
+   "time_sensitive_claim": "Typical no-show reduction figures"
+  },
+  {
+   "key": "business-messaging-apps",
+   "title": "Business messaging on WhatsApp and similar apps",
+   "adoption_level": "GROWING",
+   "domains": [
+    "*"
+   ],
+   "description": "Customers are reached on chat apps they already use, with templates and opt-in.",
+   "time_sensitive_claim": "Regional adoption and pricing of business messaging"
+  },
+  {
+   "key": "wallet-passes",
+   "title": "Mobile wallet passes",
+   "adoption_level": "MAINSTREAM",
+   "domains": [
+    "appointment-scheduling",
+    "e-commerce",
+    "media",
+    "logistics"
+   ],
+   "description": "Tickets, bookings and cards stored in Apple or Google Wallet with live updates.",
+   "time_sensitive_claim": "Platform support for pass updates"
+  },
+  {
+   "key": "embedded-payments",
+   "title": "Embedded payments",
+   "adoption_level": "GROWING",
+   "domains": [
+    "saas-b2b",
+    "marketplace",
+    "appointment-scheduling",
+    "e-commerce"
+   ],
+   "description": "Software products take payments natively instead of sending users elsewhere.",
+   "time_sensitive_claim": "Provider fees and availability by country"
+  },
+  {
+   "key": "open-banking",
+   "title": "Open banking APIs",
+   "adoption_level": "GROWING",
+   "domains": [
+    "fintech"
+   ],
+   "description": "Account data and payments through regulated bank APIs.",
+   "time_sensitive_claim": "Regulatory scope by country"
+  },
+  {
+   "key": "instant-payments",
+   "title": "Real-time payment rails",
+   "adoption_level": "GROWING",
+   "domains": [
+    "fintech",
+    "e-commerce",
+    "marketplace"
+   ],
+   "description": "Account-to-account payments that settle in seconds.",
+   "time_sensitive_claim": "Rail availability by country"
+  },
+  {
+   "key": "fhir-interoperability",
+   "title": "FHIR-based health data exchange",
+   "adoption_level": "GROWING",
+   "domains": [
+    "healthcare"
+   ],
+   "description": "Health systems expose and exchange records with the HL7 FHIR standard, often by regulation.",
+   "time_sensitive_claim": "National interoperability mandates"
+  },
+  {
+   "key": "telehealth",
+   "title": "Telehealth visits",
+   "adoption_level": "MAINSTREAM",
+   "domains": [
+    "healthcare"
+   ],
+   "description": "Video consultations are an established channel alongside in-person care.",
+   "time_sensitive_claim": "Reimbursement rules for remote visits"
+  },
+  {
+   "key": "accessibility-regulation",
+   "title": "Accessibility laws for digital services",
+   "adoption_level": "GROWING",
+   "domains": [
+    "*"
+   ],
+   "description": "Laws increasingly require WCAG-level accessibility for consumer-facing digital services.",
+   "time_sensitive_claim": "Which laws apply to the client and from when"
+  },
+  {
+   "key": "privacy-first-analytics",
+   "title": "Privacy-first product analytics",
+   "adoption_level": "GROWING",
+   "domains": [
+    "*"
+   ],
+   "description": "Analytics without third-party cookies, with consent and data minimisation by design.",
+   "time_sensitive_claim": "Consent rules for analytics in the target country"
+  },
+  {
+   "key": "core-web-vitals",
+   "title": "Core Web Vitals as the performance yardstick",
+   "adoption_level": "MAINSTREAM",
+   "domains": [
+    "*"
+   ],
+   "description": "LCP, INP and CLS measured on real users are the common way to set web performance targets.",
+   "time_sensitive_claim": "Current metric definitions and thresholds"
+  },
+  {
+   "key": "pwa",
+   "title": "Installable progressive web apps",
+   "adoption_level": "MAINSTREAM",
+   "domains": [
+    "*"
+   ],
+   "description": "Web apps with offline support and home-screen install instead of separate native apps.",
+   "time_sensitive_claim": "Platform support for web push and install"
+  },
+  {
+   "key": "edge-rendering",
+   "title": "Edge rendering and caching",
+   "adoption_level": "GROWING",
+   "domains": [
+    "e-commerce",
+    "media",
+    "saas-b2c",
+    "saas-b2b"
+   ],
+   "description": "Pages rendered or cached at the network edge close to users.",
+   "time_sensitive_claim": "Platform pricing and limits"
+  },
+  {
+   "key": "opentelemetry",
+   "title": "OpenTelemetry observability",
+   "adoption_level": "MAINSTREAM",
+   "domains": [
+    "*"
+   ],
+   "description": "A vendor-neutral standard for traces, metrics and logs.",
+   "time_sensitive_claim": "Maturity of logs support"
+  },
+  {
+   "key": "feature-flags",
+   "title": "Feature flags and progressive delivery",
+   "adoption_level": "MAINSTREAM",
+   "domains": [
+    "*"
+   ],
+   "description": "Release features gradually and turn them off without redeploying.",
+   "time_sensitive_claim": "None"
+  },
+  {
+   "key": "event-driven-webhooks",
+   "title": "Event-driven integration with webhooks",
+   "adoption_level": "MAINSTREAM",
+   "domains": [
+    "saas-b2b",
+    "marketplace",
+    "logistics",
+    "fintech"
+   ],
+   "description": "Systems integrate by publishing events and webhooks instead of polling.",
+   "time_sensitive_claim": "None"
+  },
+  {
+   "key": "zero-trust",
+   "title": "Zero-trust access",
+   "adoption_level": "MAINSTREAM",
+   "domains": [
+    "saas-b2b",
+    "government",
+    "fintech",
+    "healthcare"
+   ],
+   "description": "Every request is authenticated and authorised; no trusted internal network.",
+   "time_sensitive_claim": "None"
+  },
+  {
+   "key": "composable-architecture",
+   "title": "Composable, API-first products",
+   "adoption_level": "GROWING",
+   "domains": [
+    "saas-b2b",
+    "e-commerce"
+   ],
+   "description": "Products assembled from replaceable API-first services.",
+   "time_sensitive_claim": "None"
+  },
+  {
+   "key": "headless-commerce",
+   "title": "Headless commerce",
+   "adoption_level": "MAINSTREAM",
+   "domains": [
+    "e-commerce"
+   ],
+   "description": "Storefront decoupled from the commerce engine through APIs.",
+   "time_sensitive_claim": "None"
+  },
+  {
+   "key": "low-code-internal-tools",
+   "title": "Low-code internal tools",
+   "adoption_level": "GROWING",
+   "domains": [
+    "saas-b2b",
+    "logistics",
+    "hr"
+   ],
+   "description": "Back-office screens built with low-code platforms instead of custom code.",
+   "time_sensitive_claim": "Platform licensing"
+  },
+  {
+   "key": "local-first-sync",
+   "title": "Local-first apps with sync",
+   "adoption_level": "EMERGING",
+   "domains": [
+    "saas-b2b",
+    "logistics",
+    "edtech"
+   ],
+   "description": "Data lives on the device first and syncs with conflict-free data types.",
+   "time_sensitive_claim": "Library maturity"
+  },
+  {
+   "key": "digital-identity-wallets",
+   "title": "Digital identity wallets",
+   "adoption_level": "EMERGING",
+   "domains": [
+    "government",
+    "fintech",
+    "healthcare"
+   ],
+   "description": "Government-backed digital ID wallets for sign-in and verified attributes.",
+   "time_sensitive_claim": "National rollout dates"
+  },
+  {
+   "key": "carbon-aware-software",
+   "title": "Carbon-aware software",
+   "adoption_level": "EMERGING",
+   "domains": [
+    "*"
+   ],
+   "description": "Choosing regions and timing to reduce the carbon footprint of computing.",
+   "time_sensitive_claim": "Tooling availability"
+  },
+  {
+   "key": "microlearning",
+   "title": "Microlearning",
+   "adoption_level": "MAINSTREAM",
+   "domains": [
+    "edtech",
+    "hr"
+   ],
+   "description": "Short, focused learning units delivered in the flow of work.",
+   "time_sensitive_claim": "None"
+  },
+  {
+   "key": "iot-edge-analytics",
+   "title": "Edge analytics for IoT",
+   "adoption_level": "GROWING",
+   "domains": [
+    "iot",
+    "logistics"
+   ],
+   "description": "Processing sensor data on or near devices before sending it to the cloud.",
+   "time_sensitive_claim": "None"
+  },
+  {
+   "key": "ai-agents-backoffice",
+   "title": "AI agents for back-office tasks",
+   "adoption_level": "EMERGING",
+   "domains": [
+    "*"
+   ],
+   "description": "Agents that carry out multi-step tasks under human approval.",
+   "time_sensitive_claim": "Reliability and governance practice"
+  }
+ ]
+}

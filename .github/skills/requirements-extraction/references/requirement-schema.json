@@ -366,7 +366,7 @@
       "required": ["id", "title", "description", "adoption_level", "relevance", "relevance_reason", "applies_to", "last_reviewed", "verified", "sources", "recommendation", "created_in_run"],
       "properties": {
         "id": { "$ref": "#/$defs/trend_id" },
-        "library_key": { "type": ["string", "null"], "description": "Key in trend-library.md, or null if identified for this product." },
+        "library_key": { "type": ["string", "null"], "description": "Key in tech-trend-analysis/references/trend-library.json, or null if identified for this product." },
         "title": { "type": "string" },
         "description": { "type": "string" },
         "adoption_level": { "type": "string", "enum": ["EMERGING", "GROWING", "MAINSTREAM", "DECLINING"] },

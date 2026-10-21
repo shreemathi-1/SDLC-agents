@@ -90,6 +90,12 @@ for (const [name, d, expect] of cases) {
 
 // 4. Requirements documents: the worked example, plus draft.json / requirements.json when present.
 //    Schema validity, plus cross-checks the schema cannot express.
+const catalogue = JSON.parse(fs.readFileSync('.github/skills/innovation-discovery/references/innovation-catalogue.json', 'utf8'));
+const catKeys = new Set(catalogue.entries.map(e => e.key));
+const trendLib = JSON.parse(fs.readFileSync('.github/skills/tech-trend-analysis/references/trend-library.json', 'utf8'));
+const trendKeys = new Set(trendLib.entries.map(e => e.key));
+const SCORE_WEIGHTS = { relevance: 0.30, user_value: 0.25, business_value: 0.20, effort_inverse: 0.15, risk_inverse: 0.10 };
+const UNVERIFIED_NOTE = 'unverified; check before client presentation';
 // "verbatim" = story text with Markdown emphasis markers dropped and whitespace collapsed
 const norm = (s) => s.replace(/\*\*|\*/g, '').replace(/\s+/g, ' ').trim();
 const checkDoc = (p) => {
@@ -125,6 +131,8 @@ const checkDoc = (p) => {
     ...d.ambiguities.flatMap(a => [[`ambiguity(${a.requirement})`, a.requirement], [`ambiguity(${a.requirement})`, a.question]]),
     ...d.gaps.flatMap(g => [g.question, ...(g.resulting_requirements ?? [])].map(x => [`gap(${g.category})`, x])),
     ...d.risks.flatMap(k => k.related.map(x => [k.id, x])),
+    ...d.trends.flatMap(t => t.applies_to.map(x => [t.id, x])),
+    ...d.innovations.flatMap(i => i.dependencies.filter(x => /^[A-Z]+-\d{3,}$/.test(x)).map(x => [i.id, x])),
   ];
   for (const [from, to] of refs) if (!known.has(to)) bad.push(`${from} -> unknown ${to}`);
   // business rules: links point at BR items, and every BR governs something
@@ -171,14 +179,61 @@ const checkDoc = (p) => {
   for (const st of d.stories.filter(x => x.status !== 'REMOVED'))
     if (!d.requirements.some(r => r.source.includes(st.id))) bad.push(`${st.id} is traced by no requirement`);
   for (const r of d.requirements) if (r.source.length === 0 && !r.promoted_from) bad.push(`${r.id} has no source story`);
-  report(bad.length === 0, `${p} cross-checks (evidence, links, rules, scope, status, cycles, priorities, traceability)${bad.length ? ': ' + bad.join('; ') : ''}`);
+  // innovations and trends: catalogue/library keys exist, score maths, verification note
+  const innById = new Map(d.innovations.map(i => [i.id, i]));
+  if (innById.size !== d.innovations.length) bad.push('duplicate INN IDs');
+  if (new Set(d.trends.map(t => t.id)).size !== d.trends.length) bad.push('duplicate TRD IDs');
+  for (const i of d.innovations) {
+    if (i.catalogue_key && !catKeys.has(i.catalogue_key)) bad.push(`${i.id} unknown catalogue_key ${i.catalogue_key}`);
+    const expect = Object.entries(SCORE_WEIGHTS).reduce((a, [k, w]) => a + w * i.score[k], 0);
+    if (Math.abs(expect - i.score.weighted_total) > 0.01) bad.push(`${i.id} weighted_total ${i.score.weighted_total} != ${expect.toFixed(2)}`);
+  }
+  for (const t of d.trends) {
+    if (t.library_key && !trendKeys.has(t.library_key)) bad.push(`${t.id} unknown library_key ${t.library_key}`);
+    if (!t.verified && t.verification_note !== UNVERIFIED_NOTE) bad.push(`${t.id} unverified without the standard note`);
+  }
+  // scope contamination: innovation content reaches requirements only through an ACCEPTed promotion
+  for (const r of d.requirements.filter(r => r.promoted_from)) {
+    const i = innById.get(r.promoted_from);
+    if (!i || i.decision !== 'ACCEPT' || i.promoted_to !== r.id) bad.push(`${r.id} promoted_from ${r.promoted_from} without a matching ACCEPT/promoted_to`);
+  }
+  for (const i of d.innovations.filter(i => i.promoted_to))
+    if (byId.get(i.promoted_to)?.promoted_from !== i.id) bad.push(`${i.id}.promoted_to ${i.promoted_to} does not point back`);
+  const innTitles = new Map(d.innovations.map(i => [norm(i.title).toLowerCase(), i.id]));
+  for (const r of d.requirements.filter(r => !r.promoted_from))
+    if (innTitles.has(norm(r.title).toLowerCase())) bad.push(`${r.id} has the title of ${innTitles.get(norm(r.title).toLowerCase())} but was not promoted`);
+  report(bad.length === 0, `${p} cross-checks (evidence, links, rules, scope, status, cycles, priorities, traceability, innovation, trends, contamination)${bad.length ? ': ' + bad.join('; ') : ''}`);
 };
 const skillExamples = fs.readdirSync('.github/skills')
   .map(s => `.github/skills/${s}/references/worked-example.draft.json`).filter(p => fs.existsSync(p));
 for (const p of [...skillExamples, 'requirements/.state/draft.json', 'requirements/requirements.json'])
   if (fs.existsSync(p)) checkDoc(p);
 
-// 5. User stories (format of user-story-authoring/references/story-template.md)
+// 5. Innovation catalogue and trend library
+{
+  const levels = new Set([1, 2, 3, 4]), cx = new Set(['S', 'M', 'L', 'XL']), caps = new Set(catalogue.capabilities);
+  const bad = [];
+  if (catalogue.entries.length < 150) bad.push(`only ${catalogue.entries.length} entries (need 150+)`);
+  if (catKeys.size !== catalogue.entries.length) bad.push('duplicate keys');
+  for (const c of catalogue.categories) {
+    const n = catalogue.entries.filter(e => e.category === c).length;
+    if (n < 10) bad.push(`category ${c} has ${n} entries (need 10+)`);
+  }
+  for (const e of catalogue.entries) {
+    if (!/^[a-z0-9-]+$/.test(e.key)) bad.push(`key ${e.key}`);
+    if (!catalogue.categories.includes(e.category)) bad.push(`${e.key} category ${e.category}`);
+    if (!levels.has(e.level) || !cx.has(e.complexity)) bad.push(`${e.key} level/complexity`);
+    if (!e.domains?.length || !e.description || !e.typical_risk || !e.technology?.length) bad.push(`${e.key} missing fields`);
+    for (const r of e.requires) if (!caps.has(r)) bad.push(`${e.key} requires unknown capability ${r}`);
+  }
+  report(bad.length === 0, `innovation-catalogue.json (${catalogue.entries.length} entries, ${catalogue.categories.length} categories)${bad.length ? ': ' + bad.slice(0, 5).join('; ') : ''}`);
+  const adoption = new Set(['EMERGING', 'GROWING', 'MAINSTREAM', 'DECLINING']);
+  const tbad = trendLib.entries.filter(e => !adoption.has(e.adoption_level) || !e.domains?.length || !e.description).map(e => e.key);
+  if (trendKeys.size !== trendLib.entries.length) tbad.push('duplicate keys');
+  report(tbad.length === 0, `trend-library.json (${trendLib.entries.length} trends)${tbad.length ? ': ' + tbad.join(', ') : ''}`);
+}
+
+// 6. User stories (format of user-story-authoring/references/story-template.md)
 const storyDirs = ['examples/sample-user-stories', 'user-stories'].filter(d => fs.existsSync(d));
 const seenUs = new Map();
 for (const dir of storyDirs) {
