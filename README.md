@@ -54,7 +54,8 @@ raw-input/                           client material for `stories` mode (not in 
 user-stories/                        stories written in `stories` mode, input to `analyze` (empty here)
 examples/raw-input/                  sample client email (fixture for user-story-authoring)
 examples/sample-user-stories/        sample stories (fixture for requirements-extraction) + review checklist
-scripts/verify-scaffold.mjs          frontmatter + JSON-schema checks → npm run verify
+scripts/verify-scaffold.mjs          frontmatter, schema, gate and view checks → npm run verify
+scripts/render-views.mjs             reference renderer for the requirements/ views (golden examples)
 ```
 
 ## Use in a client project
@@ -103,7 +104,7 @@ lists the item in `blocks`, and an NFR with target `UNKNOWN` has origin `UNKNOWN
 | 4 | `requirements-prioritization` (steps 12–13: questions, MoSCoW, phases, traceability) | done |
 | 5 | `innovation-discovery` (156-entry catalogue, scoring), `tech-trend-analysis` (34-trend library) | done |
 | 6 | `requirements-validation-gate` (mid, pre-output, standalone) incl. contamination test case | done |
-| 7 | `requirements-documentation` (templates, all views) | next |
-| 8 | Review checklist + live Copilot run: `stories` on `examples/raw-input/`, then `analyze` | — |
+| 7 | `requirements-documentation` (step 15: IDs committed to the registry, 8 views, read-back of human edits) | done |
+| 8 | Review checklist + live Copilot run: `stories` on `examples/raw-input/`, then `analyze` | next |
 
-"Done" for phases 2–6 means the procedure, worked example and verify checks are in place. None has been run live in Copilot yet; that happens in phase 8.
+"Done" for phases 2–7 means the procedure, worked example and verify checks are in place. None has been run live in Copilot yet; that happens in phase 8.

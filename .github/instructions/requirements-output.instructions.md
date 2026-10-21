@@ -68,9 +68,9 @@ any state → DEPRECATED
 ## 6. Generated views
 
 - Every requirement in a view shows its origin badge: `**[Explicit]**`, `**[Inferred]**`, `**[Recommended]**`, `**[Unknown]**`.
-- Items with `client_visible: false` are omitted from `requirements.md` and `client-summary.md`; they still appear in the type-specific files, marked *(internal)*.
+- Items with `client_visible: false` are omitted from `requirements.md` and `client-summary.md`; they still appear in `traceability.md`, `business-rules.md` and `risks.md`, marked *(internal)*. The view set and formats are defined in [view-templates.md](../skills/requirements-documentation/references/view-templates.md).
 - Acceptance criteria are written as `Given … When … Then …`.
-- Views are regenerated whole; do not patch them by hand except as noted in §1.
+- Views are regenerated whole; do not patch them by hand except as noted in §1. Human edits to decision blocks and the sign-off table are read back into the JSON at the start of the next run ([read-back.md](../skills/requirements-documentation/references/read-back.md)).
 
 ## 7. State files
 

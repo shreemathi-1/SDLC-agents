@@ -114,6 +114,9 @@ is the only step that writes the final `requirements/requirements.json` and the 
   `- [<ISO-8601 UTC minute>] run=<run_id> mode=<mode> step=<NN> status=DONE|FAILED note=<one line>`
   where `run_id` is the run's start timestamp, e.g. `2026-09-20T10:00Z`, and is also written to
   `created_in_run` on every new item.
+- If `requirements/requirements.json` exists, start every `analyze`, `update`, `promote` and `summary` run by
+  reading human edits back from the views (decision blocks, sign-off table), following
+  [read-back.md](../skills/requirements-documentation/references/read-back.md). Log it as `step=00r`.
 - Start every run by reading `run-log.md`. If the last run has the same mode and its last checkpoint
   is not `step=15 status=DONE` (or the mode's final step: `00` for stories, `14` for validate), tell the user which step you are resuming
   from, load `requirements/.state/draft.json`, and continue from the next step. Otherwise start a new run.

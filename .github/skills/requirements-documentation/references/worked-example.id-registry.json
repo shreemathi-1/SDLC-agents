@@ -1,0 +1,409 @@
+{
+  "schema_version": 1,
+  "_rules": [
+    "Counters only increase. An ID is never reused or reassigned, including IDs of DEPRECATED items.",
+    "ids[] is append-only. Set retired: true instead of removing an entry.",
+    "fingerprint = `type|sorted source US-IDs|normalised title` (lowercase, punctuation removed, whitespace collapsed; stored unhashed because the agent has no hashing tool); used by update mode to match existing items before minting a new ID.",
+    "US-### IDs are minted only by the Requirements / PM agent in stories mode (counter US, committed immediately because story files are final output). IDs a human writes by hand are recorded in stories_seen and the US counter is raised past them."
+  ],
+  "created": "2026-09-20",
+  "last_updated": "2026-10-10",
+  "last_run": "2026-10-10T09:00Z",
+  "counters": {
+    "US": 1,
+    "FR": 2,
+    "NFR": 1,
+    "BR": 2,
+    "DR": 0,
+    "IR": 1,
+    "SR": 0,
+    "CR": 0,
+    "CON": 1,
+    "ASM": 0,
+    "DEP": 0,
+    "RISK": 4,
+    "Q": 9,
+    "INN": 33,
+    "TRD": 9
+  },
+  "ids": {
+    "FR-001": {
+      "type": "FUNCTIONAL",
+      "fingerprint": "functional|us-001|book an appointment online",
+      "created_in_run": "2026-10-10T09:00Z",
+      "retired": false
+    },
+    "FR-002": {
+      "type": "FUNCTIONAL",
+      "fingerprint": "functional|us-001|send booking confirmation email",
+      "created_in_run": "2026-10-10T09:00Z",
+      "retired": false
+    },
+    "BR-001": {
+      "type": "BUSINESS_RULE",
+      "fingerprint": "business_rule|us-001|booking window of 24 hours to 60 days",
+      "created_in_run": "2026-10-10T09:00Z",
+      "retired": false
+    },
+    "BR-002": {
+      "type": "BUSINESS_RULE",
+      "fingerprint": "business_rule|us-001|a booked slot is no longer free",
+      "created_in_run": "2026-10-10T09:00Z",
+      "retired": false
+    },
+    "NFR-001": {
+      "type": "NON_FUNCTIONAL",
+      "fingerprint": "non_functional|us-001|booking page load time",
+      "created_in_run": "2026-10-10T09:00Z",
+      "retired": false
+    },
+    "CON-001": {
+      "type": "CONSTRAINT",
+      "fingerprint": "constraint|us-001|clinicdesk remains the master calendar",
+      "created_in_run": "2026-10-10T09:00Z",
+      "retired": false
+    },
+    "IR-001": {
+      "type": "INTEGRATION",
+      "fingerprint": "integration|us-001|read availability from and write bookings to clinicdesk",
+      "created_in_run": "2026-10-10T09:00Z",
+      "retired": false
+    },
+    "Q-001": {
+      "type": "QUESTION",
+      "fingerprint": "q|what load time should the booking page meet on mobile and on what kind of connection should it be measured",
+      "created_in_run": "2026-10-10T09:00Z",
+      "retired": false
+    },
+    "Q-002": {
+      "type": "QUESTION",
+      "fingerprint": "q|which treatment types can patients book online only cleanings and checkups or every treatment the practice offers",
+      "created_in_run": "2026-10-10T09:00Z",
+      "retired": false
+    },
+    "Q-003": {
+      "type": "QUESTION",
+      "fingerprint": "q|how long is a bookable slot one fixed length or does it depend on the treatment",
+      "created_in_run": "2026-10-10T09:00Z",
+      "retired": false
+    },
+    "Q-004": {
+      "type": "QUESTION",
+      "fingerprint": "q|how does a patient identify themselves when booking an online account or details checked against clinicdesk eg name date of birth phone",
+      "created_in_run": "2026-10-10T09:00Z",
+      "retired": false
+    },
+    "Q-005": {
+      "type": "QUESTION",
+      "fingerprint": "q|in which country does the practice operate and which healthdata regulations apply to booking data",
+      "created_in_run": "2026-10-10T09:00Z",
+      "retired": false
+    },
+    "Q-006": {
+      "type": "QUESTION",
+      "fingerprint": "q|should patients receive appointment reminders and if so by which channel and how far in advance",
+      "created_in_run": "2026-10-10T09:00Z",
+      "retired": false
+    },
+    "Q-007": {
+      "type": "QUESTION",
+      "fingerprint": "q|can patients cancel or reschedule online and up to how long before the appointment",
+      "created_in_run": "2026-10-10T09:00Z",
+      "retired": false
+    },
+    "Q-008": {
+      "type": "QUESTION",
+      "fingerprint": "q|what happens when clinicdesk is unreachable when two people book the same slot at the same moment or when the confirmation email cannot be sent",
+      "created_in_run": "2026-10-10T09:00Z",
+      "retired": false
+    },
+    "Q-009": {
+      "type": "QUESTION",
+      "fingerprint": "q|which accessibility standard should the booking page meet",
+      "created_in_run": "2026-10-10T09:00Z",
+      "retired": false
+    },
+    "RISK-001": {
+      "type": "RISK",
+      "fingerprint": "risk|clinicdesk may not support reading slots or writing bookings",
+      "created_in_run": "2026-10-10T09:00Z",
+      "retired": false
+    },
+    "RISK-002": {
+      "type": "RISK",
+      "fingerprint": "risk|double booking between online and front desk",
+      "created_in_run": "2026-10-10T09:00Z",
+      "retired": false
+    },
+    "RISK-003": {
+      "type": "RISK",
+      "fingerprint": "risk|healthdata obligations unknown",
+      "created_in_run": "2026-10-10T09:00Z",
+      "retired": false
+    },
+    "RISK-004": {
+      "type": "RISK",
+      "fingerprint": "risk|pagespeed requirement cannot be tested yet",
+      "created_in_run": "2026-10-10T09:00Z",
+      "retired": false
+    },
+    "INN-001": {
+      "type": "INNOVATION",
+      "fingerprint": "inn|auto-reminders",
+      "created_in_run": "2026-10-10T09:00Z",
+      "retired": false
+    },
+    "INN-002": {
+      "type": "INNOVATION",
+      "fingerprint": "inn|int-calendar-sync",
+      "created_in_run": "2026-10-10T09:00Z",
+      "retired": false
+    },
+    "INN-003": {
+      "type": "INNOVATION",
+      "fingerprint": "inn|perf-core-web-vitals",
+      "created_in_run": "2026-10-10T09:00Z",
+      "retired": false
+    },
+    "INN-004": {
+      "type": "INNOVATION",
+      "fingerprint": "inn|ux-skeleton-loading",
+      "created_in_run": "2026-10-10T09:00Z",
+      "retired": false
+    },
+    "INN-005": {
+      "type": "INNOVATION",
+      "fingerprint": "inn|sec-magic-links",
+      "created_in_run": "2026-10-10T09:00Z",
+      "retired": false
+    },
+    "INN-006": {
+      "type": "INNOVATION",
+      "fingerprint": "inn|auto-rebooking",
+      "created_in_run": "2026-10-10T09:00Z",
+      "retired": false
+    },
+    "INN-007": {
+      "type": "INNOVATION",
+      "fingerprint": "inn|an-funnel-tracking",
+      "created_in_run": "2026-10-10T09:00Z",
+      "retired": false
+    },
+    "INN-008": {
+      "type": "INNOVATION",
+      "fingerprint": "inn|eng-reviews",
+      "created_in_run": "2026-10-10T09:00Z",
+      "retired": false
+    },
+    "INN-009": {
+      "type": "INNOVATION",
+      "fingerprint": "inn|sec-bot-protection",
+      "created_in_run": "2026-10-10T09:00Z",
+      "retired": false
+    },
+    "INN-010": {
+      "type": "INNOVATION",
+      "fingerprint": "inn|mob-qr-checkin",
+      "created_in_run": "2026-10-10T09:00Z",
+      "retired": false
+    },
+    "INN-011": {
+      "type": "INNOVATION",
+      "fingerprint": "inn|pers-preferred-provider",
+      "created_in_run": "2026-10-10T09:00Z",
+      "retired": false
+    },
+    "INN-012": {
+      "type": "INNOVATION",
+      "fingerprint": "inn|ux-calendar-availability-view",
+      "created_in_run": "2026-10-10T09:00Z",
+      "retired": false
+    },
+    "INN-013": {
+      "type": "INNOVATION",
+      "fingerprint": "inn|perf-availability-cache",
+      "created_in_run": "2026-10-10T09:00Z",
+      "retired": false
+    },
+    "INN-014": {
+      "type": "INNOVATION",
+      "fingerprint": "inn|perf-resilience-fallback",
+      "created_in_run": "2026-10-10T09:00Z",
+      "retired": false
+    },
+    "INN-015": {
+      "type": "INNOVATION",
+      "fingerprint": "inn|auto-waitlist",
+      "created_in_run": "2026-10-10T09:00Z",
+      "retired": false
+    },
+    "INN-016": {
+      "type": "INNOVATION",
+      "fingerprint": "inn|eng-recall-campaigns",
+      "created_in_run": "2026-10-10T09:00Z",
+      "retired": false
+    },
+    "INN-017": {
+      "type": "INNOVATION",
+      "fingerprint": "inn|auto-intake-forms",
+      "created_in_run": "2026-10-10T09:00Z",
+      "retired": false
+    },
+    "INN-018": {
+      "type": "INNOVATION",
+      "fingerprint": "inn|int-booking-widget",
+      "created_in_run": "2026-10-10T09:00Z",
+      "retired": false
+    },
+    "INN-019": {
+      "type": "INNOVATION",
+      "fingerprint": "inn|int-messaging-channels",
+      "created_in_run": "2026-10-10T09:00Z",
+      "retired": false
+    },
+    "INN-020": {
+      "type": "INNOVATION",
+      "fingerprint": "inn|ux-accessible-design-system",
+      "created_in_run": "2026-10-10T09:00Z",
+      "retired": false
+    },
+    "INN-021": {
+      "type": "INNOVATION",
+      "fingerprint": "inn|sec-consent-management",
+      "created_in_run": "2026-10-10T09:00Z",
+      "retired": false
+    },
+    "INN-022": {
+      "type": "INNOVATION",
+      "fingerprint": "inn|sec-audit-trail",
+      "created_in_run": "2026-10-10T09:00Z",
+      "retired": false
+    },
+    "INN-023": {
+      "type": "INNOVATION",
+      "fingerprint": "inn|an-utilisation",
+      "created_in_run": "2026-10-10T09:00Z",
+      "retired": false
+    },
+    "INN-024": {
+      "type": "INNOVATION",
+      "fingerprint": "inn|auto-recurring",
+      "created_in_run": "2026-10-10T09:00Z",
+      "retired": false
+    },
+    "INN-025": {
+      "type": "INNOVATION",
+      "fingerprint": "inn|int-google-reserve",
+      "created_in_run": "2026-10-10T09:00Z",
+      "retired": false
+    },
+    "INN-026": {
+      "type": "INNOVATION",
+      "fingerprint": "inn|ai-no-show-prediction",
+      "created_in_run": "2026-10-10T09:00Z",
+      "retired": false
+    },
+    "INN-027": {
+      "type": "INNOVATION",
+      "fingerprint": "inn|ai-booking-assistant",
+      "created_in_run": "2026-10-10T09:00Z",
+      "retired": false
+    },
+    "INN-028": {
+      "type": "INNOVATION",
+      "fingerprint": "inn|int-insurance-check",
+      "created_in_run": "2026-10-10T09:00Z",
+      "retired": false
+    },
+    "INN-029": {
+      "type": "INNOVATION",
+      "fingerprint": "inn|sec-field-encryption",
+      "created_in_run": "2026-10-10T09:00Z",
+      "retired": false
+    },
+    "INN-030": {
+      "type": "INNOVATION",
+      "fingerprint": "inn|eng-preventive-nudges",
+      "created_in_run": "2026-10-10T09:00Z",
+      "retired": false
+    },
+    "INN-031": {
+      "type": "INNOVATION",
+      "fingerprint": "inn|bold|treatmentplan booking",
+      "created_in_run": "2026-10-10T09:00Z",
+      "retired": false
+    },
+    "INN-032": {
+      "type": "INNOVATION",
+      "fingerprint": "inn|bold|family checkup day",
+      "created_in_run": "2026-10-10T09:00Z",
+      "retired": false
+    },
+    "INN-033": {
+      "type": "INNOVATION",
+      "fingerprint": "inn|bold|smile timeline",
+      "created_in_run": "2026-10-10T09:00Z",
+      "retired": false
+    },
+    "TRD-001": {
+      "type": "TREND",
+      "fingerprint": "trd|online-self-scheduling",
+      "created_in_run": "2026-10-10T09:00Z",
+      "retired": false
+    },
+    "TRD-002": {
+      "type": "TREND",
+      "fingerprint": "trd|two-way-sms-reminders",
+      "created_in_run": "2026-10-10T09:00Z",
+      "retired": false
+    },
+    "TRD-003": {
+      "type": "TREND",
+      "fingerprint": "trd|core-web-vitals",
+      "created_in_run": "2026-10-10T09:00Z",
+      "retired": false
+    },
+    "TRD-004": {
+      "type": "TREND",
+      "fingerprint": "trd|accessibility-regulation",
+      "created_in_run": "2026-10-10T09:00Z",
+      "retired": false
+    },
+    "TRD-005": {
+      "type": "TREND",
+      "fingerprint": "trd|passkeys",
+      "created_in_run": "2026-10-10T09:00Z",
+      "retired": false
+    },
+    "TRD-006": {
+      "type": "TREND",
+      "fingerprint": "trd|sms-otp-only-mfa",
+      "created_in_run": "2026-10-10T09:00Z",
+      "retired": false
+    },
+    "TRD-007": {
+      "type": "TREND",
+      "fingerprint": "trd|invisible-bot-protection",
+      "created_in_run": "2026-10-10T09:00Z",
+      "retired": false
+    },
+    "TRD-008": {
+      "type": "TREND",
+      "fingerprint": "trd|voice-ai-agents",
+      "created_in_run": "2026-10-10T09:00Z",
+      "retired": false
+    },
+    "TRD-009": {
+      "type": "TREND",
+      "fingerprint": "trd|business-messaging-apps",
+      "created_in_run": "2026-10-10T09:00Z",
+      "retired": false
+    }
+  },
+  "stories_seen": {
+    "US-001": {
+      "path": "examples/sample-user-stories/US-001-book-appointment-online.md",
+      "created_in_run": "2026-10-10T08:30Z"
+    }
+  }
+}

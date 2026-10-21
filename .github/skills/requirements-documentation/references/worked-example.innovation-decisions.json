@@ -1,0 +1,309 @@
+{
+  "schema_version": 1,
+  "_rules": [
+    "One entry per INN-### ID. Agents may add entries (decision: PENDING) and may fill promoted_to after a promote run.",
+    "Agents never overwrite an entry whose decision is not PENDING.",
+    "Humans set decision to ACCEPT | REJECT | DEFER here or in the decision block of requirements/innovation-opportunities.md. On conflict this file wins and the agent reports the conflict.",
+    "Only ACCEPT items are promoted, and only by the promote run mode."
+  ],
+  "last_updated": "2026-10-10",
+  "decisions": {
+    "INN-001": {
+      "catalogue_key": "auto-reminders",
+      "title": "Automatic reminders",
+      "decision": "PENDING",
+      "reason": null,
+      "decided_by": null,
+      "decided_on": null,
+      "promoted_to": null
+    },
+    "INN-002": {
+      "catalogue_key": "int-calendar-sync",
+      "title": "Personal calendar sync",
+      "decision": "PENDING",
+      "reason": null,
+      "decided_by": null,
+      "decided_on": null,
+      "promoted_to": null
+    },
+    "INN-003": {
+      "catalogue_key": "perf-core-web-vitals",
+      "title": "Core Web Vitals budget",
+      "decision": "PENDING",
+      "reason": null,
+      "decided_by": null,
+      "decided_on": null,
+      "promoted_to": null
+    },
+    "INN-004": {
+      "catalogue_key": "ux-skeleton-loading",
+      "title": "Skeleton loading screens",
+      "decision": "PENDING",
+      "reason": null,
+      "decided_by": null,
+      "decided_on": null,
+      "promoted_to": null
+    },
+    "INN-005": {
+      "catalogue_key": "sec-magic-links",
+      "title": "Passwordless magic links",
+      "decision": "PENDING",
+      "reason": null,
+      "decided_by": null,
+      "decided_on": null,
+      "promoted_to": null
+    },
+    "INN-006": {
+      "catalogue_key": "auto-rebooking",
+      "title": "One-tap reschedule links",
+      "decision": "PENDING",
+      "reason": null,
+      "decided_by": null,
+      "decided_on": null,
+      "promoted_to": null
+    },
+    "INN-007": {
+      "catalogue_key": "an-funnel-tracking",
+      "title": "Funnel analytics",
+      "decision": "PENDING",
+      "reason": null,
+      "decided_by": null,
+      "decided_on": null,
+      "promoted_to": null
+    },
+    "INN-008": {
+      "catalogue_key": "eng-reviews",
+      "title": "Post-visit reviews",
+      "decision": "PENDING",
+      "reason": null,
+      "decided_by": null,
+      "decided_on": null,
+      "promoted_to": null
+    },
+    "INN-009": {
+      "catalogue_key": "sec-bot-protection",
+      "title": "Bot and abuse protection",
+      "decision": "PENDING",
+      "reason": null,
+      "decided_by": null,
+      "decided_on": null,
+      "promoted_to": null
+    },
+    "INN-010": {
+      "catalogue_key": "mob-qr-checkin",
+      "title": "QR code check-in",
+      "decision": "PENDING",
+      "reason": null,
+      "decided_by": null,
+      "decided_on": null,
+      "promoted_to": null
+    },
+    "INN-011": {
+      "catalogue_key": "pers-preferred-provider",
+      "title": "Preferred provider memory",
+      "decision": "PENDING",
+      "reason": null,
+      "decided_by": null,
+      "decided_on": null,
+      "promoted_to": null
+    },
+    "INN-012": {
+      "catalogue_key": "ux-calendar-availability-view",
+      "title": "Visual availability calendar",
+      "decision": "PENDING",
+      "reason": null,
+      "decided_by": null,
+      "decided_on": null,
+      "promoted_to": null
+    },
+    "INN-013": {
+      "catalogue_key": "perf-availability-cache",
+      "title": "Cached availability with live confirm",
+      "decision": "PENDING",
+      "reason": null,
+      "decided_by": null,
+      "decided_on": null,
+      "promoted_to": null
+    },
+    "INN-014": {
+      "catalogue_key": "perf-resilience-fallback",
+      "title": "Graceful degradation",
+      "decision": "PENDING",
+      "reason": null,
+      "decided_by": null,
+      "decided_on": null,
+      "promoted_to": null
+    },
+    "INN-015": {
+      "catalogue_key": "auto-waitlist",
+      "title": "Waitlist with automatic offers",
+      "decision": "PENDING",
+      "reason": null,
+      "decided_by": null,
+      "decided_on": null,
+      "promoted_to": null
+    },
+    "INN-016": {
+      "catalogue_key": "eng-recall-campaigns",
+      "title": "Recall and re-engagement campaigns",
+      "decision": "PENDING",
+      "reason": null,
+      "decided_by": null,
+      "decided_on": null,
+      "promoted_to": null
+    },
+    "INN-017": {
+      "catalogue_key": "auto-intake-forms",
+      "title": "Pre-visit digital intake",
+      "decision": "PENDING",
+      "reason": null,
+      "decided_by": null,
+      "decided_on": null,
+      "promoted_to": null
+    },
+    "INN-018": {
+      "catalogue_key": "int-booking-widget",
+      "title": "Embeddable booking widget",
+      "decision": "PENDING",
+      "reason": null,
+      "decided_by": null,
+      "decided_on": null,
+      "promoted_to": null
+    },
+    "INN-019": {
+      "catalogue_key": "int-messaging-channels",
+      "title": "WhatsApp and SMS channels",
+      "decision": "PENDING",
+      "reason": null,
+      "decided_by": null,
+      "decided_on": null,
+      "promoted_to": null
+    },
+    "INN-020": {
+      "catalogue_key": "ux-accessible-design-system",
+      "title": "Accessible design system",
+      "decision": "PENDING",
+      "reason": null,
+      "decided_by": null,
+      "decided_on": null,
+      "promoted_to": null
+    },
+    "INN-021": {
+      "catalogue_key": "sec-consent-management",
+      "title": "Consent management",
+      "decision": "PENDING",
+      "reason": null,
+      "decided_by": null,
+      "decided_on": null,
+      "promoted_to": null
+    },
+    "INN-022": {
+      "catalogue_key": "sec-audit-trail",
+      "title": "Tamper-evident audit trail",
+      "decision": "PENDING",
+      "reason": null,
+      "decided_by": null,
+      "decided_on": null,
+      "promoted_to": null
+    },
+    "INN-023": {
+      "catalogue_key": "an-utilisation",
+      "title": "Capacity utilisation report",
+      "decision": "PENDING",
+      "reason": null,
+      "decided_by": null,
+      "decided_on": null,
+      "promoted_to": null
+    },
+    "INN-024": {
+      "catalogue_key": "auto-recurring",
+      "title": "Recurring bookings and orders",
+      "decision": "PENDING",
+      "reason": null,
+      "decided_by": null,
+      "decided_on": null,
+      "promoted_to": null
+    },
+    "INN-025": {
+      "catalogue_key": "int-google-reserve",
+      "title": "Book from search and maps",
+      "decision": "PENDING",
+      "reason": null,
+      "decided_by": null,
+      "decided_on": null,
+      "promoted_to": null
+    },
+    "INN-026": {
+      "catalogue_key": "ai-no-show-prediction",
+      "title": "No-show risk prediction",
+      "decision": "PENDING",
+      "reason": null,
+      "decided_by": null,
+      "decided_on": null,
+      "promoted_to": null
+    },
+    "INN-027": {
+      "catalogue_key": "ai-booking-assistant",
+      "title": "Chat or voice booking assistant",
+      "decision": "PENDING",
+      "reason": null,
+      "decided_by": null,
+      "decided_on": null,
+      "promoted_to": null
+    },
+    "INN-028": {
+      "catalogue_key": "int-insurance-check",
+      "title": "Insurance eligibility check",
+      "decision": "PENDING",
+      "reason": null,
+      "decided_by": null,
+      "decided_on": null,
+      "promoted_to": null
+    },
+    "INN-029": {
+      "catalogue_key": "sec-field-encryption",
+      "title": "Field-level encryption",
+      "decision": "PENDING",
+      "reason": null,
+      "decided_by": null,
+      "decided_on": null,
+      "promoted_to": null
+    },
+    "INN-030": {
+      "catalogue_key": "eng-preventive-nudges",
+      "title": "Preventive care or maintenance nudges",
+      "decision": "PENDING",
+      "reason": null,
+      "decided_by": null,
+      "decided_on": null,
+      "promoted_to": null
+    },
+    "INN-031": {
+      "catalogue_key": null,
+      "title": "Treatment-plan booking",
+      "decision": "PENDING",
+      "reason": null,
+      "decided_by": null,
+      "decided_on": null,
+      "promoted_to": null
+    },
+    "INN-032": {
+      "catalogue_key": null,
+      "title": "Family check-up day",
+      "decision": "PENDING",
+      "reason": null,
+      "decided_by": null,
+      "decided_on": null,
+      "promoted_to": null
+    },
+    "INN-033": {
+      "catalogue_key": null,
+      "title": "Smile timeline",
+      "decision": "PENDING",
+      "reason": null,
+      "decided_by": null,
+      "decided_on": null,
+      "promoted_to": null
+    }
+  }
+}

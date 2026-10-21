@@ -5,6 +5,7 @@ import fs from 'node:fs';
 import path from 'node:path';
 import { load as yamlLoad } from 'js-yaml';
 import Ajv2020 from 'ajv/dist/2020.js';
+import { render } from './render-views.mjs';
 
 const fm = (p) => {
   const t = fs.readFileSync(p, 'utf8');
@@ -235,7 +236,7 @@ const reportDoc = (p) => {
   for (const w of issues.filter(i => i.severity === 'WARNING')) console.log(`warn   [${w.check}] ${w.msg}`);
 };
 const skillExamples = fs.readdirSync('.github/skills')
-  .map(s => `.github/skills/${s}/references/worked-example.draft.json`).filter(p => fs.existsSync(p));
+  .flatMap(s => ['draft', 'requirements'].map(k => `.github/skills/${s}/references/worked-example.${k}.json`)).filter(p => fs.existsSync(p));
 for (const p of [...skillExamples, 'requirements/.state/draft.json', 'requirements/requirements.json'])
   if (fs.existsSync(p)) reportDoc(p);
 // published IDs must be committed in the registry (step 15 raises the counters)
@@ -245,6 +246,64 @@ if (fs.existsSync('requirements/requirements.json')) {
   const all = [...d.requirements, ...d.questions, ...d.risks, ...d.innovations, ...d.trends].map(x => x.id);
   const over = all.filter(id => { const [pre, num] = id.split('-'); return Number(num) > (reg.counters[pre] ?? 0); });
   report(over.length === 0, `requirements.json IDs are within id-registry counters${over.length ? ': ' + over.join(', ') : ''}`);
+}
+
+// 4a. Published views (step 15): every view exists, carries the run, and agrees with the JSON
+const VIEWS = ['requirements.md', 'client-summary.md', 'open-questions.md', 'innovation-opportunities.md', 'tech-trends.md', 'risks.md', 'business-rules.md', 'traceability.md'];
+const BADGES = { EXPLICIT: '**[Explicit]**', INFERRED: '**[Inferred]**', RECOMMENDED: '**[Recommended]**', UNKNOWN: '**[Unknown]**' };
+export const readDecisionBlocks = (md) => Object.fromEntries([...md.matchAll(/<!-- decision:(INN-\d{3,}) -->\n\*\*Decision:\*\* *(\w+)/g)].map(m => [m[1], m[2]]));
+const checkViews = (d, dir) => {
+  const bad = [];
+  const read = (f) => fs.existsSync(path.join(dir, f)) ? fs.readFileSync(path.join(dir, f), 'utf8') : (bad.push(`missing ${f}`), '');
+  const v = Object.fromEntries(VIEWS.map(f => [f, read(f)]));
+  for (const f of VIEWS) if (v[f] && !v[f].includes(`(run ${d.project.last_run})`)) bad.push(`${f} is not from run ${d.project.last_run}`);
+  const live = d.requirements.filter(r => r.status !== 'DEPRECATED');
+  for (const r of live) {
+    const h = v['requirements.md'].match(new RegExp(`^### ${r.id} — .*$`, 'm'));
+    if (r.client_visible && !h) bad.push(`requirements.md lacks ${r.id}`);
+    if (r.client_visible && h && !h[0].endsWith(BADGES[r.origin])) bad.push(`requirements.md ${r.id} badge is not ${BADGES[r.origin]}`);
+    if (!r.client_visible && h) bad.push(`requirements.md shows internal ${r.id}`);
+    if (r.client_visible && !new RegExp(`^\\| ${r.id} \\|.*\\|$`, 'm').test(v['requirements.md'].split('## Sign-off')[1] ?? '')) bad.push(`sign-off table lacks ${r.id}`);
+    if (!v['traceability.md'].includes(r.id)) bad.push(`traceability.md lacks ${r.id}`);
+    if (r.type === 'BUSINESS_RULE' && !v['business-rules.md'].includes(r.id)) bad.push(`business-rules.md lacks ${r.id}`);
+  }
+  if (!v['traceability.md'].includes('```mermaid')) bad.push('traceability.md has no mermaid graph');
+  for (const q of d.questions.filter(q => q.status === 'OPEN')) if (!v['open-questions.md'].includes(`### ${q.id} [`)) bad.push(`open-questions.md lacks ${q.id}`);
+  const blocks = readDecisionBlocks(v['innovation-opportunities.md']);
+  for (const i of d.innovations) {
+    if (i.decision === 'PENDING' && ['ACCEPT', 'REJECT', 'DEFER'].includes(blocks[i.id])) console.log(`warn   ${i.id} decided ${blocks[i.id]} in the view; awaiting read-back on the next run`);
+    else if (blocks[i.id] !== i.decision) bad.push(`decision block ${i.id} is ${blocks[i.id] ?? 'missing'}, JSON says ${i.decision}`);
+  }
+  for (const t of d.trends) if (!v['tech-trends.md'].includes(t.id)) bad.push(`tech-trends.md lacks ${t.id}`);
+  for (const k of d.risks) if (!v['risks.md'].includes(k.id)) bad.push(`risks.md lacks ${k.id}`);
+  return bad;
+};
+{
+  const ex = '.github/skills/requirements-documentation/references/';
+  const d = JSON.parse(fs.readFileSync(ex + 'worked-example.requirements.json', 'utf8'));
+  const views = render(d);
+  const drift = Object.entries(views).filter(([f, c]) => !fs.existsSync(ex + 'views/' + f) || fs.readFileSync(ex + 'views/' + f, 'utf8') !== c).map(([f]) => f);
+  report(drift.length === 0, `golden views match scripts/render-views.mjs${drift.length ? ': regenerate ' + drift.join(', ') : ''}`);
+  const vb = checkViews(d, ex + 'views');
+  report(vb.length === 0, `golden views agree with the JSON${vb.length ? ': ' + vb.join('; ') : ''}`);
+  // registry and decisions after step 15
+  const reg = JSON.parse(fs.readFileSync(ex + 'worked-example.id-registry.json', 'utf8'));
+  const dec = JSON.parse(fs.readFileSync(ex + 'worked-example.innovation-decisions.json', 'utf8'));
+  const rb = [];
+  const all = [...d.requirements.map(r => [r.id, r.type]), ...d.questions.map(q => [q.id, 'QUESTION']), ...d.risks.map(k => [k.id, 'RISK']),
+    ...d.innovations.map(i => [i.id, 'INNOVATION']), ...d.trends.map(t => [t.id, 'TREND'])];
+  for (const [id, type] of all) {
+    if (reg.ids[id]?.type !== type) rb.push(`${id} not committed as ${type}`);
+    const [pre, num] = id.split('-');
+    if (Number(num) > reg.counters[pre]) rb.push(`${id} above counter ${pre}=${reg.counters[pre]}`);
+  }
+  for (const st of d.stories) if (!reg.stories_seen[st.id]) rb.push(`${st.id} not in stories_seen`);
+  for (const i of d.innovations) if (dec.decisions[i.id]?.decision !== i.decision) rb.push(`${i.id} decision not merged`);
+  report(rb.length === 0, `step 15 example: registry and innovation-decisions committed${rb.length ? ': ' + rb.slice(0, 5).join('; ') : ''}`);
+}
+if (fs.existsSync('requirements/requirements.json')) {
+  const vb = checkViews(JSON.parse(fs.readFileSync('requirements/requirements.json', 'utf8')), 'requirements');
+  report(vb.length === 0, `requirements/*.md views agree with requirements.json${vb.length ? ': ' + vb.join('; ') : ''}`);
 }
 
 // 4b. Gate test: the contamination case must yield exactly the BLOCKING issues its validation block records
