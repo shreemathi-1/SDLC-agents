@@ -95,32 +95,33 @@ const catKeys = new Set(catalogue.entries.map(e => e.key));
 const trendLib = JSON.parse(fs.readFileSync('.github/skills/tech-trend-analysis/references/trend-library.json', 'utf8'));
 const trendKeys = new Set(trendLib.entries.map(e => e.key));
 const SCORE_WEIGHTS = { relevance: 0.30, user_value: 0.25, business_value: 0.20, effort_inverse: 0.15, risk_inverse: 0.10 };
+const WARNING_CHECKS = new Set(['TESTABILITY', 'DUPLICATION', 'AMBIGUITY', 'FEASIBILITY']);
 const UNVERIFIED_NOTE = 'unverified; check before client presentation';
 // "verbatim" = story text with Markdown emphasis markers dropped and whitespace collapsed
 const norm = (s) => s.replace(/\*\*|\*/g, '').replace(/\s+/g, ' ').trim();
-const checkDoc = (p) => {
-  const d = JSON.parse(fs.readFileSync(p, 'utf8'));
+const checkDoc = (p) => checkData(JSON.parse(fs.readFileSync(p, 'utf8')));
+const checkData = (d) => {
   const v = validate(d);
-  report(v, `${p} validates${v ? '' : ': ' + JSON.stringify(validate.errors.slice(0, 3))}`);
-  if (!v) return;
+  if (!v) return [{ check: 'SCHEMA', severity: 'BLOCKING', msg: JSON.stringify(validate.errors.slice(0, 3)) }];
   const storyText = Object.fromEntries(d.stories
     .filter(s => fs.existsSync(s.path)).map(s => [s.id, norm(fs.readFileSync(s.path, 'utf8'))]));
   const qs = new Map(d.questions.map(q => [q.id, q]));
   const ids = d.requirements.map(r => r.id);
   const bad = [];
-  if (new Set(ids).size !== ids.length) bad.push('duplicate requirement IDs');
+  const flag = (check, msg) => bad.push({ check, severity: WARNING_CHECKS.has(check) ? 'WARNING' : 'BLOCKING', msg });
+  if (new Set(ids).size !== ids.length) flag('ID_REGISTRY', 'duplicate requirement IDs');
   for (const r of d.requirements) {
     if (r.origin === 'EXPLICIT') {
       const texts = r.source.map(id => storyText[id]).filter(Boolean);
-      if (texts.length && !texts.some(t => t.includes(norm(r.evidence)))) bad.push(`${r.id} evidence not verbatim in ${r.source.join(',')}`);
+      if (texts.length && !texts.some(t => t.includes(norm(r.evidence)))) flag('TRACEABILITY', `${r.id} evidence not verbatim in ${r.source.join(',')}`);
     }
     for (const q of r.open_questions) {
-      if (!qs.has(q)) bad.push(`${r.id} -> missing ${q}`);
-      else if (!qs.get(q).blocks.includes(r.id)) bad.push(`${q}.blocks lacks ${r.id}`);
+      if (!qs.has(q)) flag('CONSISTENCY', `${r.id} -> missing ${q}`);
+      else if (!qs.get(q).blocks.includes(r.id)) flag('CONSISTENCY', `${q}.blocks lacks ${r.id}`);
     }
-    if (r.type === 'NON_FUNCTIONAL' && r.nfr_metric.target === 'UNKNOWN' && r.origin !== 'UNKNOWN') bad.push(`${r.id} target UNKNOWN but origin ${r.origin}`);
-    if (['OUT', 'FUTURE'].includes(r.scope) && !r.scope_reason) bad.push(`${r.id} scope ${r.scope} without scope_reason`);
-    if (r.status === 'NEEDS_CLARIFICATION' && !r.open_questions.some(q => qs.get(q)?.status === 'OPEN')) bad.push(`${r.id} NEEDS_CLARIFICATION without an OPEN question`);
+    if (r.type === 'NON_FUNCTIONAL' && r.nfr_metric.target === 'UNKNOWN' && r.origin !== 'UNKNOWN') flag('CONSISTENCY', `${r.id} target UNKNOWN but origin ${r.origin}`);
+    if (['OUT', 'FUTURE'].includes(r.scope) && !r.scope_reason) flag('CONSISTENCY', `${r.id} scope ${r.scope} without scope_reason`);
+    if (r.status === 'NEEDS_CLARIFICATION' && !r.open_questions.some(q => qs.get(q)?.status === 'OPEN')) flag('LIFECYCLE', `${r.id} NEEDS_CLARIFICATION without an OPEN question`);
   }
   // every referenced ID resolves
   const known = new Set([...ids, ...qs.keys(), ...d.risks.map(x => x.id), ...d.stories.map(x => x.id),
@@ -134,13 +135,13 @@ const checkDoc = (p) => {
     ...d.trends.flatMap(t => t.applies_to.map(x => [t.id, x])),
     ...d.innovations.flatMap(i => i.dependencies.filter(x => /^[A-Z]+-\d{3,}$/.test(x)).map(x => [i.id, x])),
   ];
-  for (const [from, to] of refs) if (!known.has(to)) bad.push(`${from} -> unknown ${to}`);
+  for (const [from, to] of refs) if (!known.has(to)) flag('CONSISTENCY', `${from} -> unknown ${to}`);
   // business rules: links point at BR items, and every BR governs something
   const byId = new Map(d.requirements.map(r => [r.id, r]));
   for (const r of d.requirements) for (const b of r.business_rules)
-    if (byId.has(b) && byId.get(b).type !== 'BUSINESS_RULE') bad.push(`${r.id}.business_rules -> ${b} is not a BUSINESS_RULE`);
+    if (byId.has(b) && byId.get(b).type !== 'BUSINESS_RULE') flag('CONSISTENCY', `${r.id}.business_rules -> ${b} is not a BUSINESS_RULE`);
   for (const b of d.requirements.filter(r => r.type === 'BUSINESS_RULE' && r.status !== 'DEPRECATED'))
-    if (!d.requirements.some(r => r.business_rules.includes(b.id))) bad.push(`${b.id} governs no requirement`);
+    if (!d.requirements.some(r => r.business_rules.includes(b.id))) flag('CONSISTENCY', `${b.id} governs no requirement`);
   // dependency cycles must be recorded as a risk covering every member
   const state = new Map(); const stack = [];
   const visit = (id) => {
@@ -148,7 +149,7 @@ const checkDoc = (p) => {
     for (const n of byId.get(id)?.dependencies ?? []) {
       if (state.get(n) === 1) {
         const cyc = stack.slice(stack.indexOf(n));
-        if (!d.risks.some(k => cyc.every(c => k.related.includes(c)))) bad.push(`dependency cycle ${cyc.join('->')}->${n} has no risk`);
+        if (!d.risks.some(k => cyc.every(c => k.related.includes(c)))) flag('CONSISTENCY', `dependency cycle ${cyc.join('->')}->${n} has no risk`);
       } else if (!state.has(n)) visit(n);
     }
     stack.pop(); state.set(id, 2);
@@ -156,58 +157,108 @@ const checkDoc = (p) => {
   for (const id of ids) if (!state.has(id)) visit(id);
   // questions: OPEN ones block something and offer an option; WITHDRAWN ones are no longer linked
   for (const q of d.questions) {
-    if (q.status === 'OPEN' && q.blocks.length === 0) bad.push(`${q.id} is OPEN but blocks nothing`);
-    if (q.status === 'OPEN' && !/^Option:/.test(q.suggested_default_option)) bad.push(`${q.id} default is not phrased "Option: …"`);
-    if (q.status === 'WITHDRAWN' && d.requirements.some(r => r.open_questions.includes(q.id))) bad.push(`${q.id} is WITHDRAWN but still linked`);
+    if (q.status === 'OPEN' && q.blocks.length === 0) flag('COMPLETENESS', `${q.id} is OPEN but blocks nothing`);
+    if (q.status === 'OPEN' && !/^Option:/.test(q.suggested_default_option)) flag('COMPLETENESS', `${q.id} default is not phrased "Option: …"`);
+    if (q.status === 'WITHDRAWN' && d.requirements.some(r => r.open_questions.includes(q.id))) flag('CONSISTENCY', `${q.id} is WITHDRAWN but still linked`);
   }
   // priorities and phases: scope agrees, dependencies come no later, MUST items depend only on MUST items
   const phaseIx = { MVP: 0, PHASE_2: 1, PHASE_3: 2, FUTURE: 3 };
   for (const r of d.requirements.filter(r => r.status !== 'DEPRECATED')) {
-    if (['OUT', 'FUTURE'].includes(r.scope) && (r.priority !== 'NOT_NOW' || r.phase !== 'FUTURE')) bad.push(`${r.id} scope ${r.scope} needs priority NOT_NOW and phase FUTURE`);
+    if (['OUT', 'FUTURE'].includes(r.scope) && (r.priority !== 'NOT_NOW' || r.phase !== 'FUTURE')) flag('CONSISTENCY', `${r.id} scope ${r.scope} needs priority NOT_NOW and phase FUTURE`);
     for (const dep of r.dependencies.map(x => byId.get(x)).filter(Boolean)) {
-      if (phaseIx[dep.phase] > phaseIx[r.phase]) bad.push(`${r.id} (${r.phase}) depends on later ${dep.id} (${dep.phase})`);
-      if (r.priority === 'MUST' && dep.priority !== 'MUST') bad.push(`${r.id} is MUST but depends on ${dep.id} (${dep.priority})`);
+      if (phaseIx[dep.phase] > phaseIx[r.phase]) flag('CONSISTENCY', `${r.id} (${r.phase}) depends on later ${dep.id} (${dep.phase})`);
+      if (r.priority === 'MUST' && dep.priority !== 'MUST') flag('CONSISTENCY', `${r.id} is MUST but depends on ${dep.id} (${dep.priority})`);
     }
   }
   // human-only changes leave a human change_log entry
   for (const r of d.requirements) {
     const human = r.change_log.some(c => c.by === 'human');
     if ((r.priority_status === 'CONFIRMED' || ['APPROVED', 'BASELINED'].includes(r.status)) && !human)
-      bad.push(`${r.id} ${r.status}/${r.priority_status} without a human change_log entry`);
+      flag('LIFECYCLE', `${r.id} ${r.status}/${r.priority_status} without a human change_log entry`);
   }
   // traceability: every active story yields a requirement; only promoted items lack a source
   for (const st of d.stories.filter(x => x.status !== 'REMOVED'))
-    if (!d.requirements.some(r => r.source.includes(st.id))) bad.push(`${st.id} is traced by no requirement`);
-  for (const r of d.requirements) if (r.source.length === 0 && !r.promoted_from) bad.push(`${r.id} has no source story`);
+    if (!d.requirements.some(r => r.source.includes(st.id))) flag('TRACEABILITY', `${st.id} is traced by no requirement`);
+  for (const r of d.requirements) if (r.source.length === 0 && !r.promoted_from) flag('TRACEABILITY', `${r.id} has no source story`);
   // innovations and trends: catalogue/library keys exist, score maths, verification note
   const innById = new Map(d.innovations.map(i => [i.id, i]));
-  if (innById.size !== d.innovations.length) bad.push('duplicate INN IDs');
-  if (new Set(d.trends.map(t => t.id)).size !== d.trends.length) bad.push('duplicate TRD IDs');
+  if (innById.size !== d.innovations.length) flag('ID_REGISTRY', 'duplicate INN IDs');
+  if (new Set(d.trends.map(t => t.id)).size !== d.trends.length) flag('ID_REGISTRY', 'duplicate TRD IDs');
   for (const i of d.innovations) {
-    if (i.catalogue_key && !catKeys.has(i.catalogue_key)) bad.push(`${i.id} unknown catalogue_key ${i.catalogue_key}`);
+    if (i.catalogue_key && !catKeys.has(i.catalogue_key)) flag('CONSISTENCY', `${i.id} unknown catalogue_key ${i.catalogue_key}`);
     const expect = Object.entries(SCORE_WEIGHTS).reduce((a, [k, w]) => a + w * i.score[k], 0);
-    if (Math.abs(expect - i.score.weighted_total) > 0.01) bad.push(`${i.id} weighted_total ${i.score.weighted_total} != ${expect.toFixed(2)}`);
+    if (Math.abs(expect - i.score.weighted_total) > 0.01) flag('CONSISTENCY', `${i.id} weighted_total ${i.score.weighted_total} != ${expect.toFixed(2)}`);
   }
   for (const t of d.trends) {
-    if (t.library_key && !trendKeys.has(t.library_key)) bad.push(`${t.id} unknown library_key ${t.library_key}`);
-    if (!t.verified && t.verification_note !== UNVERIFIED_NOTE) bad.push(`${t.id} unverified without the standard note`);
+    if (t.library_key && !trendKeys.has(t.library_key)) flag('CONSISTENCY', `${t.id} unknown library_key ${t.library_key}`);
+    if (!t.verified && t.verification_note !== UNVERIFIED_NOTE) flag('TRACEABILITY', `${t.id} unverified without the standard note`);
   }
   // scope contamination: innovation content reaches requirements only through an ACCEPTed promotion
   for (const r of d.requirements.filter(r => r.promoted_from)) {
     const i = innById.get(r.promoted_from);
-    if (!i || i.decision !== 'ACCEPT' || i.promoted_to !== r.id) bad.push(`${r.id} promoted_from ${r.promoted_from} without a matching ACCEPT/promoted_to`);
+    if (!i || i.decision !== 'ACCEPT' || i.promoted_to !== r.id) flag('SCOPE_CONTAMINATION', `${r.id} promoted_from ${r.promoted_from} without a matching ACCEPT/promoted_to`);
   }
   for (const i of d.innovations.filter(i => i.promoted_to))
-    if (byId.get(i.promoted_to)?.promoted_from !== i.id) bad.push(`${i.id}.promoted_to ${i.promoted_to} does not point back`);
+    if (byId.get(i.promoted_to)?.promoted_from !== i.id) flag('SCOPE_CONTAMINATION', `${i.id}.promoted_to ${i.promoted_to} does not point back`);
   const innTitles = new Map(d.innovations.map(i => [norm(i.title).toLowerCase(), i.id]));
   for (const r of d.requirements.filter(r => !r.promoted_from))
-    if (innTitles.has(norm(r.title).toLowerCase())) bad.push(`${r.id} has the title of ${innTitles.get(norm(r.title).toLowerCase())} but was not promoted`);
-  report(bad.length === 0, `${p} cross-checks (evidence, links, rules, scope, status, cycles, priorities, traceability, innovation, trends, contamination)${bad.length ? ': ' + bad.join('; ') : ''}`);
+    if (innTitles.has(norm(r.title).toLowerCase())) flag('SCOPE_CONTAMINATION', `${r.id} has the title of ${innTitles.get(norm(r.title).toLowerCase())} but was not promoted`);
+  // more contamination: invented numbers, INN/TRD content in requirement text, agent-answered questions, gaps answered early
+  const answers = d.questions.filter(q => q.status === 'ANSWERED').map(q => q.answer).join(' ');
+  for (const r of d.requirements.filter(r => r.nfr_metric)) {
+    const known = [r.evidence ?? '', ...r.source.map(id => storyText[id] ?? ''), answers].join(' ');
+    for (const n of r.nfr_metric.target.match(/\d+(\.\d+)?/g) ?? [])
+      if (!new RegExp(`(?<![\\d.])${n.replace('.', '\\.')}(?![\\d.])`).test(known)) flag('SCOPE_CONTAMINATION', `${r.id} target "${r.nfr_metric.target}" uses ${n}, found in no story or answer`);
+  }
+  for (const r of d.requirements) if (/\b(INN|TRD)-\d{3,}/.test(`${r.title} ${r.description}`) && !r.promoted_from)
+    flag('SCOPE_CONTAMINATION', `${r.id} text cites an innovation or trend`);
+  for (const q of d.questions) if (q.status === 'ANSWERED' && /agent|copilot|claude|assistant|ai\b/i.test(q.answered_by ?? ''))
+    flag('SCOPE_CONTAMINATION', `${q.id} answered by "${q.answered_by}"; only a human answers questions`);
+  for (const g of d.gaps) if (g.resulting_requirements?.length && qs.get(g.question)?.status !== 'ANSWERED')
+    flag('SCOPE_CONTAMINATION', `gap(${g.category}) produced ${g.resulting_requirements.join(',')} while ${g.question} is unanswered`);
+  // warnings: testability and duplication
+  for (const r of d.requirements.filter(r => !['CONSTRAINT', 'ASSUMPTION', 'DEPENDENCY'].includes(r.type)
+      && !['NEEDS_CLARIFICATION', 'DEPRECATED', 'DRAFT'].includes(r.status) && r.acceptance_criteria.length === 0))
+    flag('TESTABILITY', `${r.id} has no acceptance criteria`);
+  const seen = new Map();
+  for (const r of d.requirements.filter(r => r.status !== 'DEPRECATED'))
+    for (const k of [`t:${norm(r.title).toLowerCase()}`, r.evidence && `e:${norm(r.evidence).toLowerCase()}`].filter(Boolean)) {
+      if (seen.has(k)) flag('DUPLICATION', `${r.id} duplicates ${seen.get(k)} (${k.startsWith('t:') ? 'title' : 'evidence'})`);
+      else seen.set(k, r.id);
+    }
+  return bad;
+};
+const reportDoc = (p) => {
+  const issues = checkDoc(p);
+  const blocking = issues.filter(i => i.severity === 'BLOCKING');
+  report(blocking.length === 0, `${p} (schema + gate checks)${blocking.length ? ': ' + blocking.map(i => `[${i.check}] ${i.msg}`).join('; ') : ''}`);
+  for (const w of issues.filter(i => i.severity === 'WARNING')) console.log(`warn   [${w.check}] ${w.msg}`);
 };
 const skillExamples = fs.readdirSync('.github/skills')
   .map(s => `.github/skills/${s}/references/worked-example.draft.json`).filter(p => fs.existsSync(p));
 for (const p of [...skillExamples, 'requirements/.state/draft.json', 'requirements/requirements.json'])
-  if (fs.existsSync(p)) checkDoc(p);
+  if (fs.existsSync(p)) reportDoc(p);
+// published IDs must be committed in the registry (step 15 raises the counters)
+if (fs.existsSync('requirements/requirements.json')) {
+  const d = JSON.parse(fs.readFileSync('requirements/requirements.json', 'utf8'));
+  const reg = JSON.parse(fs.readFileSync('requirements/.state/id-registry.json', 'utf8'));
+  const all = [...d.requirements, ...d.questions, ...d.risks, ...d.innovations, ...d.trends].map(x => x.id);
+  const over = all.filter(id => { const [pre, num] = id.split('-'); return Number(num) > (reg.counters[pre] ?? 0); });
+  report(over.length === 0, `requirements.json IDs are within id-registry counters${over.length ? ': ' + over.join(', ') : ''}`);
+}
+
+// 4b. Gate test: the contamination case must yield exactly the BLOCKING issues its validation block records
+{
+  const p = '.github/skills/requirements-validation-gate/references/contamination-case.draft.json';
+  const d = JSON.parse(fs.readFileSync(p, 'utf8'));
+  const got = checkData(d).filter(i => i.severity === 'BLOCKING');
+  const want = d.validation.issues.filter(i => i.severity === 'BLOCKING');
+  const idsIn = (m) => m.match(/\b(US|FR|NFR|BR|DR|IR|SR|CR|CON|ASM|DEP|RISK|Q|INN|TRD)-\d{3,}\b/g) ?? [];
+  const missed = want.filter(w => !got.some(g => g.check === w.check && idsIn(g.msg).includes(w.items[0])));
+  const extra = got.filter(g => !want.some(w => w.check === g.check && idsIn(g.msg).includes(w.items[0])));
+  report(d.validation.result === 'FAIL' && missed.length === 0 && extra.length === 0,
+    `${p}: gate blocks all ${want.length} planted leaks${missed.length ? '; missed ' + missed.map(m => m.items[0]).join(',') : ''}${extra.length ? '; unexpected ' + extra.map(e => `[${e.check}] ${e.msg}`).join('; ') : ''}`);
+}
 
 // 5. Innovation catalogue and trend library
 {

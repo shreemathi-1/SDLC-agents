@@ -60,7 +60,7 @@ Status changes on items created in the current run are not logged. For items fro
 
 ### Mid-pipeline gate
 
-Next, the agent runs the mid-pipeline gate from [requirements-validation-gate](../requirements-validation-gate/SKILL.md). Until that skill's procedure is written, run the self-check below as the gate, and log it as `step=05g`.
+Next, the agent runs the `mid` gate from [requirements-validation-gate](../requirements-validation-gate/SKILL.md), which logs `step=05g`. The gate fixes what it safely can, records anything else as questions, and the run continues.
 
 ## Input / output contract
 
