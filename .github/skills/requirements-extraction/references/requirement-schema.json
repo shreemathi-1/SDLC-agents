@@ -161,6 +161,7 @@
         "confidence": { "$ref": "#/$defs/confidence" },
         "priority": { "$ref": "#/$defs/priority" },
         "priority_status": { "$ref": "#/$defs/priority_status" },
+        "priority_reason": { "type": "string", "description": "Step 13: why this MoSCoW priority and phase were proposed, in one or two sentences the client can read." },
         "status": { "$ref": "#/$defs/requirement_status" },
         "phase": { "$ref": "#/$defs/phase" },
         "scope": { "$ref": "#/$defs/scope" },
@@ -259,6 +260,7 @@
         "urgency": { "type": "string", "enum": ["BLOCKING", "HIGH", "NORMAL"] },
         "source": { "type": "array", "items": { "$ref": "#/$defs/story_id" } },
         "status": { "type": "string", "enum": ["OPEN", "ANSWERED", "WITHDRAWN"] },
+        "note": { "type": "string", "description": "Why the question was withdrawn or merged, e.g. \"merged into Q-004\". Required when status = WITHDRAWN." },
         "answer": { "type": ["string", "null"] },
         "answered_by": { "type": ["string", "null"] },
         "answered_on": { "oneOf": [ { "$ref": "#/$defs/date" }, { "type": "null" } ] },
@@ -266,7 +268,9 @@
       },
       "allOf": [
         { "if": { "properties": { "status": { "const": "ANSWERED" } } },
-          "then": { "required": ["answer", "answered_by", "answered_on"], "properties": { "answer": { "type": "string", "minLength": 1 } } } }
+          "then": { "required": ["answer", "answered_by", "answered_on"], "properties": { "answer": { "type": "string", "minLength": 1 } } } },
+        { "if": { "properties": { "status": { "const": "WITHDRAWN" } } },
+          "then": { "required": ["note"], "properties": { "note": { "type": "string", "minLength": 5 } } } }
       ]
     },
 

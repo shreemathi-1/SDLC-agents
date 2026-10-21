@@ -113,14 +113,70 @@ const checkDoc = (p) => {
       else if (!qs.get(q).blocks.includes(r.id)) bad.push(`${q}.blocks lacks ${r.id}`);
     }
     if (r.type === 'NON_FUNCTIONAL' && r.nfr_metric.target === 'UNKNOWN' && r.origin !== 'UNKNOWN') bad.push(`${r.id} target UNKNOWN but origin ${r.origin}`);
+    if (['OUT', 'FUTURE'].includes(r.scope) && !r.scope_reason) bad.push(`${r.id} scope ${r.scope} without scope_reason`);
+    if (r.status === 'NEEDS_CLARIFICATION' && !r.open_questions.some(q => qs.get(q)?.status === 'OPEN')) bad.push(`${r.id} NEEDS_CLARIFICATION without an OPEN question`);
   }
-  report(bad.length === 0, `${p} cross-checks (evidence verbatim, question links, NFR targets)${bad.length ? ': ' + bad.join('; ') : ''}`);
+  // every referenced ID resolves
+  const known = new Set([...ids, ...qs.keys(), ...d.risks.map(x => x.id), ...d.stories.map(x => x.id),
+    ...d.innovations.map(x => x.id), ...d.trends.map(x => x.id)]);
+  const refs = [
+    ...d.requirements.flatMap(r => [...r.dependencies, ...r.business_rules, ...r.risks].map(x => [r.id, x])),
+    ...d.questions.flatMap(q => q.blocks.map(x => [q.id, x])),
+    ...d.ambiguities.flatMap(a => [[`ambiguity(${a.requirement})`, a.requirement], [`ambiguity(${a.requirement})`, a.question]]),
+    ...d.gaps.flatMap(g => [g.question, ...(g.resulting_requirements ?? [])].map(x => [`gap(${g.category})`, x])),
+    ...d.risks.flatMap(k => k.related.map(x => [k.id, x])),
+  ];
+  for (const [from, to] of refs) if (!known.has(to)) bad.push(`${from} -> unknown ${to}`);
+  // business rules: links point at BR items, and every BR governs something
+  const byId = new Map(d.requirements.map(r => [r.id, r]));
+  for (const r of d.requirements) for (const b of r.business_rules)
+    if (byId.has(b) && byId.get(b).type !== 'BUSINESS_RULE') bad.push(`${r.id}.business_rules -> ${b} is not a BUSINESS_RULE`);
+  for (const b of d.requirements.filter(r => r.type === 'BUSINESS_RULE' && r.status !== 'DEPRECATED'))
+    if (!d.requirements.some(r => r.business_rules.includes(b.id))) bad.push(`${b.id} governs no requirement`);
+  // dependency cycles must be recorded as a risk covering every member
+  const state = new Map(); const stack = [];
+  const visit = (id) => {
+    state.set(id, 1); stack.push(id);
+    for (const n of byId.get(id)?.dependencies ?? []) {
+      if (state.get(n) === 1) {
+        const cyc = stack.slice(stack.indexOf(n));
+        if (!d.risks.some(k => cyc.every(c => k.related.includes(c)))) bad.push(`dependency cycle ${cyc.join('->')}->${n} has no risk`);
+      } else if (!state.has(n)) visit(n);
+    }
+    stack.pop(); state.set(id, 2);
+  };
+  for (const id of ids) if (!state.has(id)) visit(id);
+  // questions: OPEN ones block something and offer an option; WITHDRAWN ones are no longer linked
+  for (const q of d.questions) {
+    if (q.status === 'OPEN' && q.blocks.length === 0) bad.push(`${q.id} is OPEN but blocks nothing`);
+    if (q.status === 'OPEN' && !/^Option:/.test(q.suggested_default_option)) bad.push(`${q.id} default is not phrased "Option: …"`);
+    if (q.status === 'WITHDRAWN' && d.requirements.some(r => r.open_questions.includes(q.id))) bad.push(`${q.id} is WITHDRAWN but still linked`);
+  }
+  // priorities and phases: scope agrees, dependencies come no later, MUST items depend only on MUST items
+  const phaseIx = { MVP: 0, PHASE_2: 1, PHASE_3: 2, FUTURE: 3 };
+  for (const r of d.requirements.filter(r => r.status !== 'DEPRECATED')) {
+    if (['OUT', 'FUTURE'].includes(r.scope) && (r.priority !== 'NOT_NOW' || r.phase !== 'FUTURE')) bad.push(`${r.id} scope ${r.scope} needs priority NOT_NOW and phase FUTURE`);
+    for (const dep of r.dependencies.map(x => byId.get(x)).filter(Boolean)) {
+      if (phaseIx[dep.phase] > phaseIx[r.phase]) bad.push(`${r.id} (${r.phase}) depends on later ${dep.id} (${dep.phase})`);
+      if (r.priority === 'MUST' && dep.priority !== 'MUST') bad.push(`${r.id} is MUST but depends on ${dep.id} (${dep.priority})`);
+    }
+  }
+  // human-only changes leave a human change_log entry
+  for (const r of d.requirements) {
+    const human = r.change_log.some(c => c.by === 'human');
+    if ((r.priority_status === 'CONFIRMED' || ['APPROVED', 'BASELINED'].includes(r.status)) && !human)
+      bad.push(`${r.id} ${r.status}/${r.priority_status} without a human change_log entry`);
+  }
+  // traceability: every active story yields a requirement; only promoted items lack a source
+  for (const st of d.stories.filter(x => x.status !== 'REMOVED'))
+    if (!d.requirements.some(r => r.source.includes(st.id))) bad.push(`${st.id} is traced by no requirement`);
+  for (const r of d.requirements) if (r.source.length === 0 && !r.promoted_from) bad.push(`${r.id} has no source story`);
+  report(bad.length === 0, `${p} cross-checks (evidence, links, rules, scope, status, cycles, priorities, traceability)${bad.length ? ': ' + bad.join('; ') : ''}`);
 };
-for (const p of [
-  '.github/skills/requirements-extraction/references/worked-example.draft.json',
-  'requirements/.state/draft.json',
-  'requirements/requirements.json',
-]) if (fs.existsSync(p)) checkDoc(p);
+const skillExamples = fs.readdirSync('.github/skills')
+  .map(s => `.github/skills/${s}/references/worked-example.draft.json`).filter(p => fs.existsSync(p));
+for (const p of [...skillExamples, 'requirements/.state/draft.json', 'requirements/requirements.json'])
+  if (fs.existsSync(p)) checkDoc(p);
 
 // 5. User stories (format of user-story-authoring/references/story-template.md)
 const storyDirs = ['examples/sample-user-stories', 'user-stories'].filter(d => fs.existsSync(d));

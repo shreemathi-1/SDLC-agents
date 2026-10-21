@@ -1,0 +1,739 @@
+{
+  "schema_version": "1.0",
+  "project": {
+    "name": "Brightsmile Dental online booking",
+    "domain": [
+      "healthcare",
+      "appointment-scheduling"
+    ],
+    "description": "Patients book dental appointments online instead of phoning the front desk.",
+    "business_problem": "Patients can only book by phoning the front desk during opening hours.",
+    "business_objectives": [
+      "Let patients book appointments outside opening hours without phoning"
+    ],
+    "stakeholders": [
+      "Brightsmile Dental"
+    ],
+    "user_roles": [
+      "Patient",
+      "Front-desk staff"
+    ],
+    "input_dir": "examples/sample-user-stories/",
+    "last_run": "2026-10-10T09:00Z",
+    "last_run_mode": "analyze"
+  },
+  "stories": [
+    {
+      "id": "US-001",
+      "title": "Patient books an appointment online",
+      "path": "examples/sample-user-stories/US-001-book-appointment-online.md",
+      "source_refs": [
+        "https://www.figma.com/file/AbC123/Clinic-Booking?node-id=12-34",
+        "designs/booking-mobile.png"
+      ],
+      "status": "ACTIVE"
+    }
+  ],
+  "requirements": [
+    {
+      "id": "FR-001",
+      "version": 1,
+      "title": "Book an appointment online",
+      "description": "A patient books an appointment by choosing a dentist, a treatment type and a free time slot from the calendar.",
+      "type": "FUNCTIONAL",
+      "source": [
+        "US-001"
+      ],
+      "source_refs": [
+        "https://www.figma.com/file/AbC123/Clinic-Booking?node-id=12-34",
+        "designs/booking-mobile.png"
+      ],
+      "evidence": "The patient picks a dentist, a treatment type and a free time slot from the calendar.",
+      "origin": "EXPLICIT",
+      "rationale": null,
+      "promoted_from": null,
+      "confidence": "HIGH",
+      "priority": "SHOULD",
+      "priority_status": "PROPOSED",
+      "status": "NEEDS_CLARIFICATION",
+      "phase": "MVP",
+      "scope": "IN",
+      "dependencies": [
+        "IR-001"
+      ],
+      "business_rules": [
+        "BR-001",
+        "BR-002"
+      ],
+      "acceptance_criteria": [
+        "Given a patient on the booking page, when they select a dentist, treatment and free slot and confirm, then the appointment is saved and the slot is no longer shown as free."
+      ],
+      "open_questions": [
+        "Q-002",
+        "Q-003",
+        "Q-004",
+        "Q-005",
+        "Q-007",
+        "Q-009"
+      ],
+      "risks": [
+        "RISK-003"
+      ],
+      "client_visible": true,
+      "created_in_run": "2026-10-10T09:00Z",
+      "change_log": [
+        {
+          "date": "2026-10-10",
+          "by": "agent",
+          "change": "created",
+          "run": "2026-10-10T09:00Z"
+        }
+      ],
+      "scope_reason": "Stated in US-001."
+    },
+    {
+      "id": "FR-002",
+      "version": 1,
+      "title": "Send booking confirmation email",
+      "description": "After a booking is saved, the patient receives a confirmation email stating the appointment date, time and dentist.",
+      "type": "FUNCTIONAL",
+      "source": [
+        "US-001"
+      ],
+      "source_refs": [
+        "https://www.figma.com/file/AbC123/Clinic-Booking?node-id=12-34",
+        "designs/booking-mobile.png"
+      ],
+      "evidence": "After booking, the patient receives a confirmation email with the date, time and dentist.",
+      "origin": "EXPLICIT",
+      "rationale": null,
+      "promoted_from": null,
+      "confidence": "HIGH",
+      "priority": "SHOULD",
+      "priority_status": "PROPOSED",
+      "status": "NEEDS_CLARIFICATION",
+      "phase": "MVP",
+      "scope": "IN",
+      "dependencies": [
+        "FR-001"
+      ],
+      "business_rules": [],
+      "acceptance_criteria": [
+        "Given a patient has confirmed a booking When the appointment is saved Then the patient receives an email showing the appointment date, time and dentist"
+      ],
+      "open_questions": [
+        "Q-005",
+        "Q-006",
+        "Q-008"
+      ],
+      "risks": [
+        "RISK-003"
+      ],
+      "client_visible": true,
+      "created_in_run": "2026-10-10T09:00Z",
+      "change_log": [
+        {
+          "date": "2026-10-10",
+          "by": "agent",
+          "change": "created",
+          "run": "2026-10-10T09:00Z"
+        }
+      ],
+      "scope_reason": "Stated in US-001."
+    },
+    {
+      "id": "BR-001",
+      "version": 1,
+      "title": "Booking window of 24 hours to 60 days",
+      "description": "An appointment can be booked only if its start time is at least 24 hours and at most 60 days after the moment of booking.",
+      "type": "BUSINESS_RULE",
+      "rule_category": "TIME_BASED",
+      "source": [
+        "US-001"
+      ],
+      "evidence": "Appointments can only be booked between 24 hours and 60 days in advance.",
+      "origin": "EXPLICIT",
+      "rationale": null,
+      "promoted_from": null,
+      "confidence": "HIGH",
+      "priority": "MUST",
+      "priority_status": "PROPOSED",
+      "status": "ANALYZED",
+      "phase": "MVP",
+      "scope": "IN",
+      "dependencies": [],
+      "business_rules": [],
+      "acceptance_criteria": [
+        "Given a slot less than 24 hours away, when the patient views the calendar, then the slot cannot be selected."
+      ],
+      "open_questions": [],
+      "risks": [],
+      "client_visible": true,
+      "created_in_run": "2026-10-10T09:00Z",
+      "change_log": [
+        {
+          "date": "2026-10-10",
+          "by": "agent",
+          "change": "created",
+          "run": "2026-10-10T09:00Z"
+        }
+      ],
+      "scope_reason": "Stated in US-001."
+    },
+    {
+      "id": "BR-002",
+      "version": 1,
+      "title": "A booked slot is no longer free",
+      "description": "Once an appointment is saved for a slot, that slot is no longer offered as free to any patient.",
+      "type": "BUSINESS_RULE",
+      "rule_category": "DATA_CONSTRAINT",
+      "source": [
+        "US-001"
+      ],
+      "evidence": "the slot is no longer shown as free",
+      "origin": "EXPLICIT",
+      "rationale": null,
+      "promoted_from": null,
+      "confidence": "HIGH",
+      "priority": "MUST",
+      "priority_status": "PROPOSED",
+      "status": "ANALYZED",
+      "phase": "MVP",
+      "scope": "IN",
+      "dependencies": [],
+      "business_rules": [],
+      "acceptance_criteria": [
+        "Given a slot has just been booked, when another patient views the calendar, then that slot is not shown as free."
+      ],
+      "open_questions": [],
+      "risks": [
+        "RISK-002"
+      ],
+      "client_visible": true,
+      "created_in_run": "2026-10-10T09:00Z",
+      "change_log": [
+        {
+          "date": "2026-10-10",
+          "by": "agent",
+          "change": "created",
+          "run": "2026-10-10T09:00Z"
+        }
+      ],
+      "scope_reason": "Stated in US-001."
+    },
+    {
+      "id": "NFR-001",
+      "version": 1,
+      "title": "Booking page load time",
+      "description": "The booking page loads fast on desktop and mobile. The target load time is not stated.",
+      "type": "NON_FUNCTIONAL",
+      "nfr_metric": {
+        "metric": "booking page load time on mobile",
+        "target": "UNKNOWN",
+        "measurement": "UNKNOWN — to be agreed with the client (see Q-001)"
+      },
+      "source": [
+        "US-001"
+      ],
+      "evidence": "The booking page should load fast, even on mobile.",
+      "origin": "UNKNOWN",
+      "rationale": null,
+      "promoted_from": null,
+      "confidence": "LOW",
+      "priority": "SHOULD",
+      "priority_status": "PROPOSED",
+      "status": "NEEDS_CLARIFICATION",
+      "phase": "MVP",
+      "scope": "IN",
+      "dependencies": [
+        "FR-001"
+      ],
+      "business_rules": [],
+      "acceptance_criteria": [],
+      "open_questions": [
+        "Q-001"
+      ],
+      "risks": [
+        "RISK-004"
+      ],
+      "client_visible": true,
+      "created_in_run": "2026-10-10T09:00Z",
+      "change_log": [
+        {
+          "date": "2026-10-10",
+          "by": "agent",
+          "change": "created",
+          "run": "2026-10-10T09:00Z"
+        }
+      ],
+      "scope_reason": "Stated in US-001."
+    },
+    {
+      "id": "CON-001",
+      "version": 1,
+      "title": "ClinicDesk remains the master calendar",
+      "description": "The existing practice-management system, ClinicDesk, stays the master calendar. The booking feature must not replace it.",
+      "type": "CONSTRAINT",
+      "source": [
+        "US-001"
+      ],
+      "evidence": "We must keep using our existing practice-management system (ClinicDesk) as the master calendar.",
+      "origin": "EXPLICIT",
+      "rationale": null,
+      "promoted_from": null,
+      "confidence": "HIGH",
+      "priority": "MUST",
+      "priority_status": "PROPOSED",
+      "status": "ANALYZED",
+      "phase": "MVP",
+      "scope": "IN",
+      "dependencies": [],
+      "business_rules": [],
+      "acceptance_criteria": [],
+      "open_questions": [],
+      "risks": [
+        "RISK-001"
+      ],
+      "client_visible": true,
+      "created_in_run": "2026-10-10T09:00Z",
+      "change_log": [
+        {
+          "date": "2026-10-10",
+          "by": "agent",
+          "change": "created",
+          "run": "2026-10-10T09:00Z"
+        }
+      ],
+      "scope_reason": "Stated in US-001."
+    },
+    {
+      "id": "IR-001",
+      "version": 1,
+      "title": "Read availability from and write bookings to ClinicDesk",
+      "description": "Online booking reads free slots from ClinicDesk and writes each confirmed appointment back to ClinicDesk.",
+      "type": "INTEGRATION",
+      "source": [
+        "US-001"
+      ],
+      "evidence": null,
+      "origin": "INFERRED",
+      "rationale": "CON-001 makes ClinicDesk the master calendar, so the free slots shown in FR-001 must come from ClinicDesk, and new bookings must land there or the calendars diverge.",
+      "promoted_from": null,
+      "confidence": "MEDIUM",
+      "priority": "SHOULD",
+      "priority_status": "PROPOSED",
+      "status": "NEEDS_CLARIFICATION",
+      "phase": "MVP",
+      "scope": "IN",
+      "dependencies": [
+        "CON-001"
+      ],
+      "business_rules": [],
+      "acceptance_criteria": [],
+      "open_questions": [
+        "Q-008"
+      ],
+      "risks": [
+        "RISK-001",
+        "RISK-002"
+      ],
+      "client_visible": true,
+      "created_in_run": "2026-10-10T09:00Z",
+      "change_log": [
+        {
+          "date": "2026-10-10",
+          "by": "agent",
+          "change": "created",
+          "run": "2026-10-10T09:00Z"
+        }
+      ],
+      "scope_reason": "Follows from in-scope items (CON-001); needed for them to work."
+    }
+  ],
+  "ambiguities": [
+    {
+      "requirement": "FR-001",
+      "what": "\"a treatment type\" does not say which treatments are bookable online.",
+      "why_it_matters": "It decides which treatments the booking page lists and which ClinicDesk appointment types are exposed.",
+      "interpretations": [
+        "Only cleanings and check-ups (the story's \"I want\" names these)",
+        "Every treatment the practice offers"
+      ],
+      "question": "Q-002",
+      "impact_if_unresolved": "The booking page may offer treatments the practice wants handled by phone.",
+      "severity": "IMPORTANT"
+    },
+    {
+      "requirement": "FR-001",
+      "what": "\"a free time slot\" does not say how long a slot is.",
+      "why_it_matters": "Slot length decides how the calendar is cut up and whether a longer treatment fits.",
+      "interpretations": [
+        "One fixed slot length for all treatments",
+        "Slot length depends on the treatment type"
+      ],
+      "question": "Q-003",
+      "impact_if_unresolved": "Appointments may overlap or leave gaps in the dentist's day.",
+      "severity": "IMPORTANT"
+    },
+    {
+      "requirement": "NFR-001",
+      "what": "\"load fast\" has no measurable target.",
+      "why_it_matters": "Without a number the requirement cannot be tested or designed for.",
+      "interpretations": [
+        "Under 2 seconds on 4G",
+        "Under 3 seconds on 4G",
+        "Faster than the current phone wait, with no fixed number"
+      ],
+      "question": "Q-001",
+      "impact_if_unresolved": "NFR-001 stays untestable and may be judged failed at acceptance.",
+      "severity": "IMPORTANT"
+    }
+  ],
+  "gaps": [
+    {
+      "category": "AUTH",
+      "severity": "CRITICAL",
+      "description": "The story does not say how a patient is identified when booking.",
+      "why_relevant_to_domain": "healthcare: a booking is tied to a patient record, and booking under someone else's name exposes health data.",
+      "question": "Q-004",
+      "resulting_requirements": []
+    },
+    {
+      "category": "COMPLIANCE",
+      "severity": "CRITICAL",
+      "description": "No health-data or privacy regulation is named. SECURITY, AUDIT_LOGGING and DATA_RETENTION obligations follow from the answer, so they are covered by this gap.",
+      "why_relevant_to_domain": "healthcare: appointment data and treatment type are health data in most jurisdictions.",
+      "question": "Q-005",
+      "resulting_requirements": []
+    },
+    {
+      "category": "NOTIFICATIONS",
+      "severity": "IMPORTANT",
+      "description": "Reminders are listed as undecided in the story's Open points.",
+      "why_relevant_to_domain": "appointment-scheduling: reminders are the usual way to cut no-shows.",
+      "question": "Q-006",
+      "resulting_requirements": []
+    },
+    {
+      "category": "WORKFLOWS",
+      "severity": "IMPORTANT",
+      "description": "Online cancellation and rescheduling are listed as undecided in the story's Open points.",
+      "why_relevant_to_domain": "appointment-scheduling: patients expect to change a booking the same way they made it.",
+      "question": "Q-007",
+      "resulting_requirements": []
+    },
+    {
+      "category": "ERROR_HANDLING",
+      "severity": "IMPORTANT",
+      "description": "No behaviour is given for ClinicDesk being unreachable, two simultaneous bookings of one slot, or a failed confirmation email.",
+      "why_relevant_to_domain": "appointment-scheduling with an external master calendar: both failures are common.",
+      "question": "Q-008",
+      "resulting_requirements": []
+    },
+    {
+      "category": "ACCESSIBILITY",
+      "severity": "IMPORTANT",
+      "description": "No accessibility standard is given for a public booking page.",
+      "why_relevant_to_domain": "healthcare: patients include older people and people with impairments, who must be able to book.",
+      "question": "Q-009",
+      "resulting_requirements": []
+    }
+  ],
+  "questions": [
+    {
+      "id": "Q-001",
+      "text": "What load time should the booking page meet on mobile, and on what kind of connection should it be measured?",
+      "audience": "CLIENT",
+      "category": "NFR_TARGET",
+      "blocks": [
+        "NFR-001"
+      ],
+      "suggested_default_option": "Option: page interactive within 3 s on a mid-range phone over 4G (p75 of real visits)",
+      "options": [
+        "≤ 2 s on 4G",
+        "≤ 3 s on 4G",
+        "Other target set by the client"
+      ],
+      "urgency": "HIGH",
+      "source": [
+        "US-001"
+      ],
+      "status": "OPEN",
+      "answer": null,
+      "answered_by": null,
+      "answered_on": null,
+      "created_in_run": "2026-10-10T09:00Z"
+    },
+    {
+      "id": "Q-002",
+      "text": "Which treatment types can patients book online: only cleanings and check-ups, or every treatment the practice offers?",
+      "audience": "CLIENT",
+      "category": "SCOPE",
+      "blocks": [
+        "FR-001"
+      ],
+      "suggested_default_option": "Option: only cleanings and check-ups, as named in the story; other treatments stay phone-only",
+      "options": [
+        "Cleanings and check-ups only",
+        "All treatments",
+        "A list the practice maintains"
+      ],
+      "urgency": "HIGH",
+      "source": [
+        "US-001"
+      ],
+      "status": "OPEN",
+      "answer": null,
+      "answered_by": null,
+      "answered_on": null,
+      "created_in_run": "2026-10-10T09:00Z"
+    },
+    {
+      "id": "Q-003",
+      "text": "How long is a bookable slot: one fixed length, or does it depend on the treatment?",
+      "audience": "CLIENT",
+      "category": "WORKFLOWS",
+      "blocks": [
+        "FR-001"
+      ],
+      "suggested_default_option": "Option: length depends on treatment type and is taken from ClinicDesk",
+      "options": [
+        "Fixed length for all treatments",
+        "Length per treatment type"
+      ],
+      "urgency": "HIGH",
+      "source": [
+        "US-001"
+      ],
+      "status": "OPEN",
+      "answer": null,
+      "answered_by": null,
+      "answered_on": null,
+      "created_in_run": "2026-10-10T09:00Z"
+    },
+    {
+      "id": "Q-004",
+      "text": "How does a patient identify themselves when booking: an online account, or details checked against ClinicDesk (e.g. name, date of birth, phone)?",
+      "audience": "CLIENT",
+      "category": "AUTH",
+      "blocks": [
+        "FR-001"
+      ],
+      "suggested_default_option": "Option: no account; match name, date of birth and phone against the ClinicDesk patient record",
+      "options": [
+        "Patient account with login",
+        "Details matched to ClinicDesk record",
+        "Guest booking, staff verify later"
+      ],
+      "urgency": "BLOCKING",
+      "source": [
+        "US-001"
+      ],
+      "status": "OPEN",
+      "answer": null,
+      "answered_by": null,
+      "answered_on": null,
+      "created_in_run": "2026-10-10T09:00Z"
+    },
+    {
+      "id": "Q-005",
+      "text": "In which country does the practice operate, and which health-data regulations apply to booking data?",
+      "audience": "CLIENT",
+      "category": "COMPLIANCE",
+      "blocks": [
+        "FR-001",
+        "FR-002"
+      ],
+      "suggested_default_option": "Option: the client names the jurisdiction; the team then lists the obligations for review",
+      "options": [],
+      "urgency": "BLOCKING",
+      "source": [
+        "US-001"
+      ],
+      "status": "OPEN",
+      "answer": null,
+      "answered_by": null,
+      "answered_on": null,
+      "created_in_run": "2026-10-10T09:00Z"
+    },
+    {
+      "id": "Q-006",
+      "text": "Should patients receive appointment reminders, and if so by which channel and how far in advance?",
+      "audience": "CLIENT",
+      "category": "NOTIFICATIONS",
+      "blocks": [
+        "FR-002"
+      ],
+      "suggested_default_option": "Option: no reminders in the first release; revisit after launch",
+      "options": [
+        "No reminders",
+        "Email reminder",
+        "SMS reminder"
+      ],
+      "urgency": "NORMAL",
+      "source": [
+        "US-001"
+      ],
+      "status": "OPEN",
+      "answer": null,
+      "answered_by": null,
+      "answered_on": null,
+      "created_in_run": "2026-10-10T09:00Z"
+    },
+    {
+      "id": "Q-007",
+      "text": "Can patients cancel or reschedule online, and up to how long before the appointment?",
+      "audience": "CLIENT",
+      "category": "WORKFLOWS",
+      "blocks": [
+        "FR-001"
+      ],
+      "suggested_default_option": "Option: no online cancellation in the first release; patients phone the front desk",
+      "options": [
+        "No online cancellation",
+        "Cancel online up to 24 hours before"
+      ],
+      "urgency": "NORMAL",
+      "source": [
+        "US-001"
+      ],
+      "status": "OPEN",
+      "answer": null,
+      "answered_by": null,
+      "answered_on": null,
+      "created_in_run": "2026-10-10T09:00Z"
+    },
+    {
+      "id": "Q-008",
+      "text": "What happens when ClinicDesk is unreachable, when two people book the same slot at the same moment, or when the confirmation email cannot be sent?",
+      "audience": "INTERNAL",
+      "category": "ERROR_HANDLING",
+      "blocks": [
+        "IR-001",
+        "FR-002"
+      ],
+      "suggested_default_option": "Option: show the patient a \"try again or phone us\" message; ClinicDesk decides which booking wins",
+      "options": [],
+      "urgency": "HIGH",
+      "source": [
+        "US-001"
+      ],
+      "status": "OPEN",
+      "answer": null,
+      "answered_by": null,
+      "answered_on": null,
+      "created_in_run": "2026-10-10T09:00Z"
+    },
+    {
+      "id": "Q-009",
+      "text": "Which accessibility standard should the booking page meet?",
+      "audience": "CLIENT",
+      "category": "ACCESSIBILITY",
+      "blocks": [
+        "FR-001"
+      ],
+      "suggested_default_option": "Option: WCAG 2.2 level AA",
+      "options": [
+        "WCAG 2.2 AA",
+        "No formal standard"
+      ],
+      "urgency": "NORMAL",
+      "source": [
+        "US-001"
+      ],
+      "status": "OPEN",
+      "answer": null,
+      "answered_by": null,
+      "answered_on": null,
+      "created_in_run": "2026-10-10T09:00Z"
+    }
+  ],
+  "risks": [
+    {
+      "id": "RISK-001",
+      "title": "ClinicDesk may not support reading slots or writing bookings",
+      "category": "INTEGRATION",
+      "description": "IR-001 assumes ClinicDesk exposes availability and accepts new appointments from outside. If it does not, online booking cannot work as specified.",
+      "likelihood": "MEDIUM",
+      "impact": "HIGH",
+      "mitigation": "Confirm ClinicDesk API access and terms with the vendor before design starts; plan a short technical spike.",
+      "owner": null,
+      "related": [
+        "IR-001",
+        "CON-001"
+      ],
+      "status": "OPEN",
+      "origin": "INFERRED",
+      "rationale": "CON-001 fixes ClinicDesk as master calendar, so the whole feature depends on its integration options, which the stories do not describe.",
+      "client_visible": true,
+      "created_in_run": "2026-10-10T09:00Z"
+    },
+    {
+      "id": "RISK-002",
+      "title": "Double booking between online and front desk",
+      "category": "TECHNICAL",
+      "description": "A slot can be booked online and at the front desk at the same moment, breaking BR-002.",
+      "likelihood": "MEDIUM",
+      "impact": "MEDIUM",
+      "mitigation": "Make ClinicDesk the single place a booking is committed and re-check availability at confirmation (see Q-008).",
+      "owner": null,
+      "related": [
+        "BR-002",
+        "IR-001",
+        "Q-008"
+      ],
+      "status": "OPEN",
+      "origin": "INFERRED",
+      "rationale": "Two booking channels write to one calendar.",
+      "client_visible": true,
+      "created_in_run": "2026-10-10T09:00Z"
+    },
+    {
+      "id": "RISK-003",
+      "title": "Health-data obligations unknown",
+      "category": "COMPLIANCE",
+      "description": "Booking stores patient identity with a treatment type. The applicable regulation is not known (Q-005).",
+      "likelihood": "HIGH",
+      "impact": "HIGH",
+      "mitigation": "Get the jurisdiction from the client early and review obligations before architecture work.",
+      "owner": null,
+      "related": [
+        "FR-001",
+        "FR-002",
+        "Q-005"
+      ],
+      "status": "OPEN",
+      "origin": "INFERRED",
+      "rationale": "healthcare domain with no regulation named.",
+      "client_visible": true,
+      "created_in_run": "2026-10-10T09:00Z"
+    },
+    {
+      "id": "RISK-004",
+      "title": "Page-speed requirement cannot be tested yet",
+      "category": "REQUIREMENT_QUALITY",
+      "description": "NFR-001 has no target, so it cannot pass or fail acceptance.",
+      "likelihood": "HIGH",
+      "impact": "MEDIUM",
+      "mitigation": "Agree a target through Q-001 before the requirement is approved.",
+      "owner": null,
+      "related": [
+        "NFR-001",
+        "Q-001"
+      ],
+      "status": "OPEN",
+      "origin": "INFERRED",
+      "rationale": "nfr_metric.target is UNKNOWN.",
+      "client_visible": true,
+      "created_in_run": "2026-10-10T09:00Z"
+    }
+  ],
+  "innovations": [],
+  "trends": [],
+  "validation": {
+    "last_run": null,
+    "gate": "NONE",
+    "result": "NOT_RUN",
+    "issues": []
+  }
+}
