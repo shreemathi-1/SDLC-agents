@@ -1,4 +1,0 @@
-node_modules/
-.DS_Store
-# in-run scratch written by the Requirements / PM agent between checkpoints
-requirements/.state/draft.json
